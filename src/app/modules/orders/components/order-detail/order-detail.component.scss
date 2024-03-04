@@ -1,0 +1,38 @@
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 2px !important;
+  padding: 15px 20px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar {
+  display: none;
+}
+
+:host ::ng-deep .mat-mdc-dialog-content {
+  max-height: 83vh;
+  padding: 0 !important;
+}
+
+:host ::ng-deep .mdc-dialog__title {
+  padding: 0 0px 9px !important;
+}
+
+:host ::ng-deep .mat-dialog-content::-webkit-scrollbar {
+  width: 2px;
+}
+
+:host ::ng-deep .mat-dialog-content::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+:host ::ng-deep .mat-dialog-content::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+:host ::ng-deep .yandex {
+  height: calc(100% - 135px);
+}
+
+:host ::ng-deep .mat-mdc-tab-group .mat-mdc-tab-body-content {
+  padding: 0;
+}

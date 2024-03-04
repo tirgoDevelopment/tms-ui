@@ -1,0 +1,84 @@
+<div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent p-4">
+  <div class="flex">
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+      <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <div class="text-3xl font-bold tracking-tight">Активные перевозчики</div>
+  </div>
+
+  <div class="my-4">
+    <mat-table [dataSource]="dataSource" class="table">
+      <ng-container matColumnDef="index">
+        <mat-header-cell class="font-extrabold index-column " *matHeaderCellDef> No </mat-header-cell>
+        <mat-cell class="index-column relative" *matCellDef="let row; let i=index">
+          <div>
+            {{ i + 1 }}
+            <div
+              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-green-700 border-1 border-white rounded-full top-0 right-0 dark:border-gray-900"
+              *ngIf="row.driverOffers.length > 0 && row.cargoStatus.code == 0">
+              {{row.driverOffers.length}}</div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell class="font-extrabold index-column" *matHeaderCellDef mat-sort-header> ID
+        </mat-header-cell>
+        <mat-cell class="index-column" *matCellDef="let row"> {{ row?.id }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="full_name">
+        <mat-header-cell *matHeaderCellDef>ФИО</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row?.full_name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="transport_kind">
+        <mat-header-cell *matHeaderCellDef>Вид транспорта</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row?.transport_kind}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Статус</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.status}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="subscribe">
+        <mat-header-cell *matHeaderCellDef>Подписка</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.subscribe}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="offers">
+        <mat-header-cell *matHeaderCellDef>Разр. предложений</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row?.offers ? 'Да':'Нет'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef>Геопозиция</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row?.location}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i=index" (click)="showOrderDetails(row)"></mat-row>
+
+    </mat-table>
+
+    <div class="w-full flex justify-center p-2 border" *ngIf="!isLoading && !dataSource?.length">
+      Данные отсутствуют в таблице
+    </div>
+
+    <div class="w-full flex justify-center p-2 border" *ngIf="isLoading">
+      <mat-progress-spinner [diameter]="32" [mode]="'indeterminate'"></mat-progress-spinner>
+    </div>
+
+    <div class="flex justify-end">
+      <app-pagination [totalPagesCount]="totalPagesCount" [size]="size" [currentPage]="currentPage"
+        (paginationEvent)="onPaginationEvent($event)">
+      </app-pagination>
+
+    </div>
+
+  </div>
+
+</div>

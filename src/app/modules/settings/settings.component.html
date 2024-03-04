@@ -1,0 +1,54 @@
+<div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent p-4">
+  <div class="flex">
+    <div class="text-3xl font-bold tracking-tight">Настройки</div>
+  </div>
+
+  <div class="flex flex-col mt-5" [formGroup]="form">
+    <mat-form-field class="flex-auto md:w-72 sm:w-full">
+      <mat-label>Старый пароль</mat-label>
+      <input type="password" formControlName="password" matInput #passwordField>
+      <button mat-icon-button type="button"
+        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+        matSuffix>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+          [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto md:w-72 sm:w-full">
+      <mat-label>Новый пароль</mat-label>
+      <input type="password" formControlName="newPassword" matInput #newPasswordField>
+      <button mat-icon-button type="button"
+        (click)="newPasswordField.type === 'password' ? newPasswordField.type = 'text' : newPasswordField.type = 'password'"
+        matSuffix>
+        <mat-icon class="icon-size-5" *ngIf="newPasswordField.type === 'password'"
+          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+        <mat-icon class="icon-size-5" *ngIf="newPasswordField.type === 'text'"
+          [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto md:w-72 sm:w-full">
+      <mat-label>Подтвердите пароль</mat-label>
+      <input type="password" formControlName="confirmPassword" matInput #confirmPasswordField>
+      <button mat-icon-button type="button"
+        (click)="confirmPasswordField.type === 'password' ? confirmPasswordField.type = 'text' : confirmPasswordField.type = 'password'"
+        matSuffix>
+        <mat-icon class="icon-size-5" *ngIf="confirmPasswordField.type === 'password'"
+          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+        <mat-icon class="icon-size-5" *ngIf="confirmPasswordField.type === 'text'"
+          [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button (click)="changePassword()" [disabled]="loading" class="fuse-mat-button-large dark mt-6 md:w-72 sm:w-full"
+      mat-flat-button [color]="'primary'">
+      <span *ngIf="!loading">Изменить</span>
+      <mat-progress-spinner *ngIf="loading" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+
+  </div>
+
+</div>

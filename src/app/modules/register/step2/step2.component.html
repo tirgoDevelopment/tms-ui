@@ -1,0 +1,164 @@
+<div class="flex justify-center items-center h-full w-full">
+  <div class="login-contianer">
+    <div class="mt-2 p-8 login-card ">
+
+      <div class="flex justify-between items-center">
+        <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          РЕГИСТРАЦИЯ
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="stepper-item active"><span>1</span></div>
+          <mat-icon class="step-arrow-active" svgIcon="heroicons_outline:arrow-long-right"></mat-icon>
+          <div class="stepper-item active"><span>2</span></div>
+          <mat-icon class="step-arrow" svgIcon="heroicons_outline:arrow-long-right"></mat-icon>
+          <div class="stepper-item"><span>3</span></div>
+        </div>
+      </div>
+
+      <form [formGroup]="signUpForm" class="mt-8 w-full" #signInNgForm="ngForm">
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>Имя руководителя</mat-label>
+            <input matInput [formControlName]="'supervisorFirstName'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Фамилия руководителя</mat-label>
+            <input matInput [formControlName]="'supervisorLastName'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Телефон</mat-label>
+            <ngx-mat-intl-tel-input [formControlName]="'phoneNumber'" [preferredCountries]="['uz']"
+              [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="phoneNumber" #phone>
+            </ngx-mat-intl-tel-input>
+          </mat-form-field>
+        </div>
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>Имя ответственного лица</mat-label>
+            <input matInput [formControlName]="'responsiblePersonFistName'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Фамилия ответственного лица</mat-label>
+            <input matInput [formControlName]="'responsiblePersonLastName'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Телефон ответственного лица</mat-label>
+            <ngx-mat-intl-tel-input formControlName="responsbilePersonPhoneNumber" [preferredCountries]="['uz']"
+              [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="responsbilePersonPhoneNumber"
+              #responsbilePersonPhoneNumber>
+            </ngx-mat-intl-tel-input>
+          </mat-form-field>
+        </div>
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>Юридический адрес</mat-label>
+            <input matInput [formControlName]="'legalAddress'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Фактический адрес</mat-label>
+            <input matInput [formControlName]="'factAddress'" />
+          </mat-form-field>
+        </div>
+
+        <div class="flex items-end gap-8">
+          <div class="w-32">
+            <mat-label class="font-bold">Паспорт руководителя</mat-label>
+            <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+              <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+              <div class="absolute inset-0 flex items-center justify-center z-20">
+                <div>
+                  <input formControlName="passportFilePath" id="avatar-file-input1"
+                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'passportFilePath')">
+                  <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                    for="avatar-file-input1" matRipple>
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                  </label>
+                </div>
+              </div>
+              <img class="object-fill w-full h-full" *ngIf="passportFilePath" [src]="passportFilePath">
+            </div>
+          </div>
+
+          <div class="w-32">
+            <mat-label class="font-bold">Регистрация сертификата</mat-label>
+            <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+              <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+              <div class="absolute inset-0 flex items-center justify-center z-20">
+                <div>
+                  <input formControlName="registrationCertificateFilePath" id="avatar-file-input4"
+                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'registrationCertificateFilePath')">
+                  <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                    for="avatar-file-input4" matRipple>
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                  </label>
+                </div>
+              </div>
+              <img class="object-fill w-full h-full" *ngIf="registrationCertificateFilePath"
+                [src]="registrationCertificateFilePath">
+            </div>
+          </div>
+
+          <div class="w-32">
+            <mat-label class="font-bold">Логотип</mat-label>
+            <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+              <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+              <div class="absolute inset-0 flex items-center justify-center z-20">
+                <div>
+                  <input formControlName="logoFilePath" id="avatar-file-input2"
+                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'logoFilePath')">
+                  <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                    for="avatar-file-input2" matRipple>
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                  </label>
+                </div>
+              </div>
+              <img class="object-fill w-full h-full" *ngIf="logoFilePath" [src]="logoFilePath">
+            </div>
+          </div>
+
+          <div class="w-32">
+            <mat-label class="font-bold">Лицензия для перевозки груза</mat-label>
+            <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+              <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+              <div class="absolute inset-0 flex items-center justify-center z-20">
+                <div>
+                  <input formControlName="transportationCertificateFilePath" id="avatar-file-input3"
+                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+                    [accept]="'image/jpeg, image/png'"
+                    (change)="selectFile($event, 'transportationCertificateFilePath')">
+                  <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+                    for="avatar-file-input3" matRipple>
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                  </label>
+                </div>
+              </div>
+              <img class="object-fill w-full h-full" *ngIf="transportationCertificateFilePath"
+                [src]="transportationCertificateFilePath">
+            </div>
+          </div>
+        </div>
+
+        <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'"
+          [disabled]="signUpForm.disabled" (click)="signUp()">
+          <span *ngIf="!signUpForm.disabled">
+            Продалжить
+          </span>
+          <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
+            [mode]="'indeterminate'"></mat-progress-spinner>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+.pagination-wrapper {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: end;
+  }
+  
+  .pagination-inner {
+    display: flex;
+    align-items: center;
+  }
+  
+  select {
+    padding: 2px;
+    border: none;
+    outline: none;
+    width: 60px;
+    border-bottom: 1px solid dodgerblue;
+  }
+  
+  select:hover {
+    background-color: rgba(170, 169, 169, 0.12);
+  }
+  
+  select option {
+    padding: 2px;
+  }
+  
+  .select-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .button-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  
+  .button-wrapper button {
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    margin: 2px;
+    position: relative;
+  }
+  
+  .tooltip-span {
+    display: block;
+    transform: scale(0);
+    position: absolute;
+    z-index: 5;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background-color: rgba(97, 97, 97, 0.9);
+    white-space: nowrap;
+    transition: ease 0.3s;
+    color: white;
+  }
+  
+  .next .tooltip-span {
+    top: 0;
+    left: -30px;
+  }
+  
+  .prev .tooltip-span {
+    top: 0;
+    right: -40px;
+  }
+  
+  .next:hover .tooltip-span {
+    transition: ease 0.3s;
+    transform: scale(1) translate(30%, -100%);
+  }
+  
+  .prev:hover .tooltip-span {
+    transition: ease 0.3s;
+    transform: scale(1) translate(-50%, -100%);
+  }
+  
+  .current {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .current p {
+    margin: 0;
+  }

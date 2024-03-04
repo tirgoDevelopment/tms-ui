@@ -1,0 +1,28 @@
+<div class="pagination-wrapper">
+  <div class="pagination-inner">
+    <div class="select-wrapper">
+      <!-- <p class="m-0 me-">Items per page</p> -->
+      <select [(ngModel)]="size" (change)="onSizePageClick()">
+        <option [ngValue]="option" *ngFor="let option of options">{{option}}</option>
+      </select>
+    </div>
+
+    <div class="current">
+      <p class="me-2">{{ currentPage }}</p> из
+      <p class="ms-2">{{ totalPagesCount }}</p>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="prev" (click)="onPrevPageClick()" [disabled]="currentPage == 1">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        <!-- <span class="tooltip-span">Предыдущая страница</span> -->
+      </button>
+      <button class="next" (click)="onNextPageClick()"
+        [disabled]="totalPagesCount == currentPage || totalPagesCount == 0">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+        <!-- <span class="tooltip-span">Следующая страница</span> -->
+      </button>
+    </div>
+
+  </div>
+</div>

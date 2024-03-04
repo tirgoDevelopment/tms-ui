@@ -1,0 +1,247 @@
+<div class="flex justify-between items-center">
+  <p mat-dialog-title class="font-bold text-2xl">ID #{{data.id}}</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+
+<mat-tab-group>
+  <mat-tab label="Информация">
+    <mat-dialog-content class="h-full">
+      <div class="h-60 w-full mt-4">
+        <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
+        </ya-map>
+      </div>
+      <div class="max-w-md mx-auto mt-3 bg-white rounded-lg shadow-md">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-lg mb-1">Откуда</p>
+            <p class="font-bold">{{data.loadingLocation}}</p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Куда</p>
+            <p class="font-bold">{{data.deliveryLocation}}</p>
+          </div>
+          
+          <div *ngIf="data.customsPlaceLocation">
+            <p class="text-lg mb-1">Место затаможки</p>
+            <p class="font-bold">
+              {{data.customsPlaceLocation}}</p>
+          </div>
+
+          <div *ngIf="data.customsClearancePlaceLocation">
+            <p class="text-lg mb-1">Место растаможки</p>
+            <p class="font-bold">
+              {{data.customsClearancePlaceLocation}}</p>
+          </div>
+
+          <div *ngIf="data.additionalLoadingLocation">
+            <p class="text-lg mb-1">Дополнительное место погрузки</p>
+            <p class="font-bold">
+              {{data.additionalLoadingLocation}}</p>
+          </div>
+
+          <div *ngIf="data.additionalDeliveryLocation">
+            <p class="text-lg mb-1">Дополнительное место выгрузки</p>
+            <p class="font-bold">
+              {{data.additionalDeliveryLocation}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Тип груза</p>
+            <p class="font-bold">{{data.cargoType.name}}</p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Тип транспорта</p>
+            <p class="font-bold" *ngFor="let item of data.transportTypes">
+              {{item.name}}
+            </p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Вид транспорта</p>
+            <p class="font-bold" *ngFor="let item of data.transportKinds">
+              {{item.name}}
+            </p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Размер груза</p>
+            <p class="font-bold">
+              д: {{ data.cargoLength ? data.cargoLength + 'см.' : 'Не указана' }}
+              Ш: {{ data.cargoWidth ? data.cargoWidth + 'см.' : 'Не указана' }}
+              В: {{ data.cargoHeight ? data.cargoHeight + 'см.' : 'Не указана' }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Вес груза</p>
+            <p class="font-bold">
+              {{ data.cargoWeight ? data.cargoWeight + 'кг' : 'Не указана' }}
+            </p>
+
+          </div>
+          <div>
+            <p class="text-lg mb-1">Стоимость</p>
+            <p class="font-bold">
+              {{ data.offeredPrice ? data.offeredPrice + ' ' + data.offeredPriceCurrency.name : 'Не указана' }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Аванс</p>
+            <p class="font-bold">
+              {{ data.inAdvancePrice ? data.inAdvancePrice + ' ' + data.inAdvancePriceCurrencyId.name : 'Не указана' }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Дата оформления заказа</p>
+            <p class="font-bold">{{data.createdAt | dateFormat}}</p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Заказ назначен на</p>
+            <p class="font-bold">{{data.sendDate | dateFormat }}</p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Статус</p>
+            <p class="font-bold">
+              {{data.cargoStatus.name}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Способ оплаты</p>
+            <p class="font-bold">
+              {{data.paymentMethod == 'cash' ? 'Наличи':'Безналичные'}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Безопасная сделка</p>
+            <p class="font-bold">
+              {{data.isSafe ? 'Да':'Нет'}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">ADR</p>
+            <p class="font-bold">
+              {{data.isAdr ? 'Да':'Нет'}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Carnet TIR</p>
+            <p class="font-bold">
+              {{data.isCarnetTir ? 'Да':'Нет'}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">ГЛОНАСС</p>
+            <p class="font-bold">
+              {{data.isGlonas ? 'Да':'Нет'}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Паромом</p>
+            <p class="font-bold">
+              {{data.isParanom ? 'Да':'Нет'}}</p>
+          </div>
+
+          <div *ngIf="data.refrigeratorCount">
+            <p class="text-lg mb-1">Количество автовоз</p>
+            <p class="font-bold">
+              {{data.refrigeratorCount}}</p>
+          </div>
+
+          <div *ngIf="data.refrigeratorFrom">
+            <p class="text-lg mb-1">Режим от (°С)</p>
+            <p class="font-bold">
+              {{data.refrigeratorFrom}}</p>
+          </div>
+
+          <div *ngIf="data.refrigeratorTo">
+            <p class="text-lg mb-1">Режим до (°С)</p>
+            <p class="font-bold">
+              {{data.refrigeratorTo}}</p>
+          </div>
+
+          <div *ngIf="data.isHook">
+            <p class="text-lg mb-1">Крюк</p>
+            <p class="font-bold">
+              {{data.isHook}}</p>
+          </div>
+
+          <div *ngIf="data.cisternVolume">
+            <p class="text-lg mb-1">Объем(л)</p>
+            <p class="font-bold">
+              {{data.cisternVolume}}</p>
+          </div>
+
+          <div *ngIf="data.containerVolume">
+            <p class="text-lg mb-1">Объем(ф)</p>
+            <p class="font-bold">
+              {{data.containerVolume}}</p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Способ погрузки</p>
+            <p class="font-bold">
+              {{data.loadingMethod ? 'data.loadingMethod' : 'Не указана'}}</p>
+          </div>
+          <div>
+            <p class="text-lg mb-1">Упаковка</p>
+            <p class="font-bold">
+              {{data.cargoPackage ? 'data.cargoPackage' : 'Не указана'}}</p>
+          </div>
+          cargoPackage
+        </div>
+      </div>
+
+    </mat-dialog-content>
+
+  </mat-tab>
+  <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
+    <div
+      class="max-w-sm p-4 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      *ngFor="let offer of data.driverOffers">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="mb-2">
+          <p class="text-base mb-1 text-slate-500">ID</p>
+          <p class="font-bold">#{{offer.id}}</p>
+        </div>
+        <div class="mb-2">
+          <p *ngIf="data.cargoStatus.code !== 0" class="text-base mb-1 text-slate-500">Телефон</p>
+          <p *ngIf="data.cargoStatus.code !== 0" class="font-bold">{{offer.driver.phoneNumbers[0]?.phoneNumber}} </p>
+        </div>
+        <div>
+          <p class="text-base mb-1 text-slate-500	">ФИО</p>
+          <p class="font-bold">{{offer.driver.lastName}} {{offer.driver.firstName}}</p>
+        </div>
+        <div>
+          <p class="text-base mb-1 text-slate-500">Предлагаемая цена</p>
+          <mat-form-field class="flex-auto" *ngIf="editing">
+            <input type="number" matInput [(ngModel)]="editedAmount">
+            <mat-select matPrefix [(ngModel)]="editedCurrencyId">
+              <mat-option *ngFor="let currency of currencies" [value]="currency.id">{{currency.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <p *ngIf="!editing" class="font-bold">{{offer.amount}} {{offer.currency.name}}</p>
+        </div>
+      </div>
+
+      <div class="flex gap-2 w-full" *ngIf="data.cargoStatus.code == 0">
+        <button *ngIf="offer.createdBy.userType !== 'client_merchant_user' && !editing" (click)="editOffer(offer)"
+          type="button"
+          class="px-3 py-2 hover:bg-primary hover:text-white hover:border-primary text-primary border border-primary text-sm font-medium rounded-lg mt-3 w-full">Изменить</button>
+
+        <button *ngIf="!editing" (click)="acceptDriver(offer)" type="button"
+          [disabled]="offer.createdBy.userType == 'client_merchant_user'"
+          class="px-3 py-2 text-white text-sm bg-primary font-medium rounded-lg mt-3 w-full hover:opacity-95">{{offer.createdBy.userType
+          == 'client_merchant_user' ? 'Ожидание запроса' : 'Принять'}}</button>
+
+        <button *ngIf="editing" (click)="cancelEditing()" type="button"
+          class="px-3 py-2 hover:bg-primary hover:text-white hover:border-primary text-primary border border-primary text-sm font-medium rounded-lg mt-3 w-full">Отменить</button>
+
+        <button *ngIf="editing" (click)="saveEditedOffer(offer)" type="button"
+          class="px-3 py-2 text-white text-sm bg-primary font-medium rounded-lg mt-3 w-full hover:opacity-95">Сохранить</button>
+
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
