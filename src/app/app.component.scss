@@ -1,76 +1,57 @@
 :host {
-    display: flex;
-    flex: 1 1 auto;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
 }
+
 ::ng-deep input[type=number]::-webkit-inner-spin-button,
 ::ng-deep input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none !important; 
+  -webkit-appearance: none !important;
   appearance: none !important;
 }
-/* Firefox */
-::ng-deep input[type=number] {
-  -moz-appearance: textfield !important;
+
+:host ::ng-deep .mat-elevation-z8 tr:hover {
+  background-color: none !important;
 }
-::ng-deep .table {
-  overflow-x: auto !important;
-}
-::ng-deep .mdc-data-table__table {
-  border: 1px solid #E3E3E3 !important;
-}
-::ng-deep mat-header-cell {
-  padding: 16px 0;
-  border-right: 1px solid #E3E3E3;
-  border-left: 1px solid #E3E3E3;
-}
-::ng-deep mat-cell {
-  font-weight: 800;
-  padding: 16px 0;
-  border-right: 1px solid #E3E3E3;
-  border-left: 1px solid #E3E3E3;
-}
-:host ::ng-deep mat-row:hover {
-  background: #E8E8E8 !important;
-  cursor: pointer !important;
-}
-:host ::ng-deep mat-row {
-  background: #fff !important;
-}
-:host ::ng-deep mat-row:nth-child(even) {
-  background-color: #E3E3E3;
-}
+
 :host ::ng-deep .status-badge {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
-  width: 200px;
   height: 30px;
   font-size: 12px;
   font-weight: 700;
   color: #fff;
+  padding: 10px;
 }
-:host ::ng-deep .status-order-blue{
+
+:host ::ng-deep .status-order-blue {
   background: #003366 !important;
   color: white !important;
 }
-:host ::ng-deep .status-order-yellow{
+
+:host ::ng-deep .status-order-yellow {
   background: #F7C02B !important;
   color: white !important;
 }
-:host ::ng-deep .status-order-green{
+
+:host ::ng-deep .status-order-green {
   background: #1da706 !important;
   color: white !important;
 }
-:host ::ng-deep .status-order-red{
+
+:host ::ng-deep .status-order-red {
   background: #D71010 !important;
   color: white !important;
 }
-:host ::ng-deep .status-order-info{
+
+:host ::ng-deep .status-order-info {
   background: #006400 !important;
   color: white !important;
 }
+
 ::ng-deep .index-column {
   flex: none !important;
   display: flex;
@@ -79,4 +60,31 @@
   padding-left: 0px !important;
   padding-right: 0px !important;
   width: 50px !important;
+}
+
+:host ::ng-deep .loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+:host ::ng-deep table th,
+:host ::ng-deep table td,
+:host ::ng-deep table tr {
+  border: 1px solid #E2E2E2DB !important;
+  align-self: stretch;
+}
+
+.dark :host ::ng-deep table th,
+.dark :host ::ng-deep table td,
+.dark :host ::ng-deep table tr {
+  border-color: #141723DB !important;
 }

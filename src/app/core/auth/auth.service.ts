@@ -14,7 +14,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private _userService: UserService,
     private router: Router
   ) {
   }
@@ -25,32 +24,32 @@ export class AuthService {
     return localStorage.getItem('merchant') ?? '';
   }
   merchantCreate(data) {
-    return this.http.post(env.apiUrl + '/users/register/client-merchant', data);
+    return this.http.post(env.apiUsers + '/users/client-merchants/register', data);
   }
   merchantComplete(data) {
-    return this.http.post(env.apiUrl + '/users/register/client-merchant/complete', data);
+    return this.http.post(env.apiUsers + '/users/client-merchants/register/complete', data);
   }
   merchantUpdate(data) {
-    return this.http.post(env.apiUrl + '/users/register/client-merchant/step', data);
+    return this.http.post(env.apiUsers + '/users/client-merchants/register/step', data);
   }
   verifyPhone(data) {
-    return this.http.post(env.apiUrl + '/users/client-merchant-user/phone-verify', data);
+    return this.http.post(env.apiUsers + '/users/client-merchant-user/phone-verify', data);
   }
   verifyCode(data) {
-    return this.http.post(env.apiUrl + '/users/client-merchant-user/verify-code', data);
+    return this.http.post(env.apiUsers + '/users/client-merchant-user/verify-code', data);
   }
   getMerchantById(id) {
-    return this.http.get(env.apiUrl + '/users/client-merchant/id?id=' + id);
+    return this.http.get(env.apiUsers + '/users/client-merchants/client-merchant-by?id=' + id);
   }
   resetPassword(data): Observable<any> {
-    return this.http.patch(env.apiUrl + '/users/client-merchant-user/reset-password', data);
+    return this.http.patch(env.apiUsers + '/users/client-merchant-user/reset-password', data);
   }
   signIn(credentials: { username: string; password: string,userType: string }) {
     credentials.userType = 'client_merchant_user';
-    return this.http.post(env.apiUrl + '/users/login', credentials);
+    return this.http.post(env.apiUsers + '/users/login', credentials);
   }
   sendEmail(email) {
-    return this.http.post(env.apiUrl + '/users/client-merchant-user/send-code', email);
+    return this.http.post(env.apiUsers + '/users/client-merchant-user/send-code', email);
   }
   signOut(): Observable<any> {
     localStorage.removeItem('merchant');
