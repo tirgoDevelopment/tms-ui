@@ -17,7 +17,7 @@ export class UserService {
     }
 
     getUser() {
-     let user = jwtDecode(localStorage.getItem('merchant'));
+     let user = jwtDecode(localStorage.getItem('tmc'));
     }
     set user(value) {
         this._user.next(value.data);

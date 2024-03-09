@@ -18,41 +18,41 @@ export class AuthService {
   ) {
   }
   set accessToken(token: string) {
-    localStorage.setItem('merchant', token);
+    localStorage.setItem('tmc', token);
   }
   get accessToken(): string {
-    return localStorage.getItem('merchant') ?? '';
+    return localStorage.getItem('tmc') ?? '';
   }
   merchantCreate(data) {
-    return this.http.post(env.apiUsers + '/users/client-merchants/register', data);
+    return this.http.post(env.apiUsers + '/users/driver-merchants/register', data);
   }
   merchantComplete(data) {
-    return this.http.post(env.apiUsers + '/users/client-merchants/register/complete', data);
+    return this.http.post(env.apiUsers + '/users/driver-merchants/register/complete', data);
   }
   merchantUpdate(data) {
-    return this.http.post(env.apiUsers + '/users/client-merchants/register/step', data);
+    return this.http.post(env.apiUsers + '/users/driver-merchants/register/step', data);
   }
   verifyPhone(data) {
-    return this.http.post(env.apiUsers + '/users/client-merchant-user/phone-verify', data);
+    return this.http.post(env.apiUsers + '/users/driver-merchant-user/phone-verify', data);
   }
   verifyCode(data) {
-    return this.http.post(env.apiUsers + '/users/client-merchant-user/verify-code', data);
+    return this.http.post(env.apiUsers + '/users/driver-merchant-user/verify-code', data);
   }
   getMerchantById(id) {
-    return this.http.get(env.apiUsers + '/users/client-merchants/client-merchant-by?id=' + id);
+    return this.http.get(env.apiUsers + '/users/driver-merchants/driver-merchant-by?id=' + id);
   }
   resetPassword(data): Observable<any> {
-    return this.http.patch(env.apiUsers + '/users/client-merchant-user/reset-password', data);
+    return this.http.patch(env.apiUsers + '/users/driver-merchant-user/reset-password', data);
   }
   signIn(credentials: { username: string; password: string,userType: string }) {
-    credentials.userType = 'client_merchant_user';
+    credentials.userType = 'driver_merchant_user';
     return this.http.post(env.apiUsers + '/users/login', credentials);
   }
   sendEmail(email) {
-    return this.http.post(env.apiUsers + '/users/client-merchant-user/send-code', email);
+    return this.http.post(env.apiUsers + '/users/driver-merchant-user/send-code', email);
   }
   signOut(): Observable<any> {
-    localStorage.removeItem('merchant');
+    localStorage.removeItem('tmc');
     this._authenticated = false;
     return of(true);
   }

@@ -1,6 +1,6 @@
-import { CommonModule, DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
+import { DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -15,24 +15,35 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
-import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
+import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 
 @Component({
-  selector: 'app-driver-detail',
-  templateUrl: './detail.component.html',
+  selector: 'app-driver-edit',
+  templateUrl: './edit.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [PaginationComponent, MatDialogModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+  imports: [PaginationComponent, NgxMatIntlTelInputComponent,MatDialogModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
 
 })
-export class DetailComponent implements OnInit {
-  ngOnInit(): void { }
+export class DriverEditComponent implements OnInit {
+  form: FormGroup;
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      firstName: [this.data.firstName,Validators.required],
+      lastName: [this.data.lastName,Validators.required],
+      phoneNumber: [this.data.phoneNumbers[0].phoneNumber,Validators.required],
+      password: [null,Validators.required]
+    })
+   }
   constructor(
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
     private toastr: ToastrService
   ) { }
 
+  
 }
