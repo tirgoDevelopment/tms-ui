@@ -9,21 +9,21 @@ export class TypesService {
   constructor(private http: HttpClient) { }
 
   getTransportTypes() {
-    return this.http.get(env.apiUrl + '/references/transport-types/all');
+    return this.http.get(env.apiReferences + '/references/transport-types/all');
   }
   getTransportKinds() {
-    return this.http.get(env.apiUrl + '/references/transport-kinds/all');
+    return this.http.get(env.apiReferences + '/references/transport-kinds/all');
   }
   getCargoTypes() {
-    return this.http.get(env.apiUrl + '/references/cargo-type-groups/all');
+    return this.http.get(env.apiReferences + '/references/cargo-type-groups/all');
   }
   getCurrencies() {
-    return this.http.get(env.apiUrl + '/references/currencies/all');
+    return this.http.get(env.apiReferences + '/references/currencies/all');
   }
   getPackages() {
-    return this.http.get(env.apiUrl + '/references/cargo-packages/all');
+    return this.http.get(env.apiReferences + '/references/cargo-packages/all');
   }
   getCargoLoadingMethod() {
-    return this.http.get(env.apiUrl + '/references/cargo-loading-method/all');
+    return this.http.get(env.apiReferences + '/references/cargo-loading-method/all');
   }
 }

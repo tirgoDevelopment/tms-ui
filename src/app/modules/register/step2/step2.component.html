@@ -59,6 +59,18 @@
 
         <div class="flex w-full gap-2">
           <mat-form-field class="w-full">
+            <mat-label>Адрес гаража </mat-label>
+            <input matInput [formControlName]="'garageAddress'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Почтоый индекс</mat-label>
+            <input matInput [formControlName]="'postalCode'" />
+          </mat-form-field>
+        </div>
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
             <mat-label>Юридический адрес</mat-label>
             <input matInput [formControlName]="'legalAddress'" />
           </mat-form-field>
@@ -76,16 +88,16 @@
               <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
               <div class="absolute inset-0 flex items-center justify-center z-20">
                 <div>
-                  <input formControlName="passportFilePath" id="avatar-file-input1"
+                  <input formControlName="passport" id="avatar-file-input1"
                     class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
-                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'passportFilePath')">
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'passport')">
                   <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
                     for="avatar-file-input1" matRipple>
                     <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                   </label>
                 </div>
               </div>
-              <img class="object-fill w-full h-full" *ngIf="passportFilePath" [src]="passportFilePath">
+              <img class="object-fill w-full h-full" *ngIf="passport" [src]="passport">
             </div>
           </div>
 
@@ -95,17 +107,17 @@
               <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
               <div class="absolute inset-0 flex items-center justify-center z-20">
                 <div>
-                  <input formControlName="registrationCertificateFilePath" id="avatar-file-input4"
+                  <input formControlName="registrationCertificate" id="avatar-file-input4"
                     class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
-                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'registrationCertificateFilePath')">
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'registrationCertificate')">
                   <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
                     for="avatar-file-input4" matRipple>
                     <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                   </label>
                 </div>
               </div>
-              <img class="object-fill w-full h-full" *ngIf="registrationCertificateFilePath"
-                [src]="registrationCertificateFilePath">
+              <img class="object-fill w-full h-full" *ngIf="registrationCertificate"
+                [src]="registrationCertificate">
             </div>
           </div>
 
@@ -115,16 +127,16 @@
               <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
               <div class="absolute inset-0 flex items-center justify-center z-20">
                 <div>
-                  <input formControlName="logoFilePath" id="avatar-file-input2"
+                  <input formControlName="logo" id="avatar-file-input2"
                     class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
-                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'logoFilePath')">
+                    [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'logo')">
                   <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
                     for="avatar-file-input2" matRipple>
                     <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                   </label>
                 </div>
               </div>
-              <img class="object-fill w-full h-full" *ngIf="logoFilePath" [src]="logoFilePath">
+              <img class="object-fill w-full h-full" *ngIf="logo" [src]="logo">
             </div>
           </div>
 
@@ -134,18 +146,18 @@
               <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
               <div class="absolute inset-0 flex items-center justify-center z-20">
                 <div>
-                  <input formControlName="transportationCertificateFilePath" id="avatar-file-input3"
+                  <input formControlName="transportationCertificate" id="avatar-file-input3"
                     class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
                     [accept]="'image/jpeg, image/png'"
-                    (change)="selectFile($event, 'transportationCertificateFilePath')">
+                    (change)="selectFile($event, 'transportationCertificate')">
                   <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
                     for="avatar-file-input3" matRipple>
                     <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                   </label>
                 </div>
               </div>
-              <img class="object-fill w-full h-full" *ngIf="transportationCertificateFilePath"
-                [src]="transportationCertificateFilePath">
+              <img class="object-fill w-full h-full" *ngIf="transportationCertificate"
+                [src]="transportationCertificate">
             </div>
           </div>
         </div>

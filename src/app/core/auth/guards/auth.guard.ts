@@ -14,7 +14,7 @@ export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
                 const urlTree = router.parseUrl(`/auth/sign-in?${redirectURL}`);
                 return of(urlTree); 
             }
-            let user:any = jwtDecode(localStorage.getItem('merchant'));
+            let user:any = jwtDecode(localStorage.getItem('tmc'));
             if (user.completed && (!user.verified && !user.rejected) && state.url !== '/register/step3') {
                 return of(false)
             }

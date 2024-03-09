@@ -1,0 +1,32 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">Добавить перевозчика</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+
+<div class="flex justify-center items-center h-full w-full">
+  <div class="login-contianer">
+    <div class="login-card ">
+      <form [formGroup]="verifyPhoneForm" class="mt-8" #verifyPhoneNgForm="ngForm" (ngSubmit)="verifyPhone()">
+
+        <div class="form-width">
+          <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+            <mat-label>Телефон</mat-label>
+            <ngx-mat-intl-tel-input formControlName="phone" [preferredCountries]="['uz']"
+              [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="phone" #phone>
+            </ngx-mat-intl-tel-input>
+          </mat-form-field>
+        </div>
+
+        <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
+          [disabled]="verifyPhoneForm.disabled">
+          <span *ngIf="!verifyPhoneForm.disabled">Отправить</span>
+          <mat-progress-spinner *ngIf="verifyPhoneForm.disabled" [diameter]="24"
+            [mode]="'indeterminate'"></mat-progress-spinner>
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>

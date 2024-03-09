@@ -16,7 +16,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { CreateDriverComponent } from 'app/modules/drivers/components/create/create-driver.component';
 
 @Component({
-  selector: 'verification-code',
+  selector: 'driver-verification-code',
   templateUrl: './verification-code.component.html',
   styleUrls: ['./verification-code.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -59,9 +59,13 @@ export class VerificationCodeComponent implements OnInit {
       this.loading = false;
       this.toastr.error('Пароль не совпадает');
     }
-    else if (this.smsCode == this.verifyCode) {
+    else if (this.smsCode == this.verifyCode && this.authService.accessToken) {
+      const dialogRef = this.dialog.open(CreateDriverComponent, {
+        autoFocus: false,
+        disableClose: true,
+        data: this.data
+      });
       this.dialogRef.close();
-      this.router.navigate(['auth/sign-up'], { queryParams: { phone: this.data.phone } });
     }
     
   }

@@ -1,0 +1,13 @@
+.confirm-dialog {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.confirm-dialog.show {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.confirm-dialog.hide {
+    opacity: 0;
+    transform: translate(0, 50%);
+}

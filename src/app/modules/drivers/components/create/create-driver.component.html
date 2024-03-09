@@ -1,0 +1,103 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">Добавить перевозчика</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll" #signInNgForm="ngForm">
+
+  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 overflow-y-scroll">
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Имя</mat-label>
+      <input matInput [formControlName]="'firstName'" />
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Фамилия</mat-label>
+      <input matInput [formControlName]="'lastName'" />
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Электронная почта</mat-label>
+      <input matInput [formControlName]="'email'" />
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Телефон</mat-label>
+      <input matInput [formControlName]="'phoneNumbers'" [readonly]="this.form.value.phoneNumbers"  />
+
+      <!-- <ngx-mat-intl-tel-input [disabled]="true" [formControlName]="'phoneNumbers'" [preferredCountries]="['uz']"
+        [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="phoneNumbers" #phone>
+      </ngx-mat-intl-tel-input> -->
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Гражданство</mat-label>
+      <input matInput [formControlName]="'citizenship'" />
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" [formControlName]="'password'" #passwordField>
+      <button mat-icon-button type="button"
+        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+        matSuffix>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+          [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+          [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="flex items-end gap-4">
+    <div class="w-32">
+      <mat-label class="font-bold">Паспорт</mat-label>
+      <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+          <div>
+            <input formControlName="passport" id="avatar-file-input1"
+              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'passport')">
+            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+              for="avatar-file-input1" matRipple>
+              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+            </label>
+          </div>
+        </div>
+        <img class="object-fill w-full h-full" *ngIf="passport" [src]="passport">
+      </div>
+    </div>
+
+    <div class="w-32">
+      <mat-label class="font-bold">Водительские права</mat-label>
+      <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+          <div>
+            <input formControlName="driverLicense" id="avatar-file-input2"
+              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'driverLicense')">
+            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+              for="avatar-file-input2" matRipple>
+              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+            </label>
+          </div>
+        </div>
+        <img class="object-fill w-full h-full" *ngIf="driverLicense" [src]="driverLicense">
+      </div>
+    </div>
+
+  </div>
+
+
+  <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'" [disabled]="form.disabled"
+    (click)="submit()">
+    <span *ngIf="!form.disabled">
+      Сохранить
+    </span>
+    <mat-progress-spinner *ngIf="form.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+  </button>
+</form>

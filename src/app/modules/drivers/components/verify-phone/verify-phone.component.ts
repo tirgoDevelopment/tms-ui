@@ -17,7 +17,7 @@ import { VerificationCodeComponent } from './verification-code/verification-code
 import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
-  selector: 'auth-verify-phone',
+  selector: 'driver-verify-phone',
   templateUrl: './verify-phone.component.html',
   styleUrls: ['./verify-phone.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -36,7 +36,7 @@ export class AuthVerifyPhoneComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
   ) { }
-
+ 
   ngOnInit() {
     this.verifyPhoneForm = this.formBuilder.group({
       phone: ['', [Validators.required]],

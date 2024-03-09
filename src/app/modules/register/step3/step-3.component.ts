@@ -47,7 +47,7 @@ export class Step3Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = jwtDecode(localStorage.getItem('merchant'));
+    this.currentUser = jwtDecode(localStorage.getItem('tmc'));
     this.authService.getMerchantById(this.currentUser.merchantId).subscribe((res: any) => {
       if (res.success) {
         this.merchant = res.data;
@@ -66,9 +66,9 @@ export class Step3Component implements OnInit {
       merchantId: [null],
       responsiblePersonLastName: [null],
       responsiblePersonFistName: [null],
-      registrationCertificateFilePath: [null],
-      passportFilePath: [null],
-      logoFilePath: [null],
+      registrationCertificate: [null],
+      passport: [null],
+      logo: [null],
       responsbilePersonPhoneNumber: [null],
       supervisorFirstName: [null],
       supervisorLastName: [null],
@@ -80,6 +80,7 @@ export class Step3Component implements OnInit {
       currency2: [null],
       bankAccount2: [null, [Validators.minLength(20), Validators.maxLength(20), Validators.pattern('^[0-9]*$')]],
       bankName: [null, [Validators.required]],
+      bankBranchName: [null, [Validators.required]],
       inn: [null, [Validators.required]],
       taxPayerCode: [null, [Validators.minLength(12), Validators.maxLength(12), Validators.required]],
       oked: [null, [Validators.required]],
@@ -127,15 +128,15 @@ export class Step3Component implements OnInit {
         this.signUpForm.patchValue({
           responsiblePersonLastName: this.merchant.responsiblePersonLastName,
           responsiblePersonFistName: this.merchant.responsiblePersonFistName,
-          registrationCertificateFilePath: this.merchant.registrationCertificateFilePath,
-          passportFilePath: this.merchant.passportFilePath,
-          logoFilePath: this.merchant.logoFilePath,
+          registrationCertificate: this.merchant.registrationCertificate,
+          passport: this.merchant.passport,
+          logo: this.merchant.logo,
           responsbilePersonPhoneNumber: this.merchant.responsbilePersonPhoneNumber,
           supervisorFirstName: this.merchant.supervisorFirstName,
           supervisorLastName: this.merchant.supervisorLastName,
           legalAddress: this.merchant.legalAddress,
           factAddress: this.merchant.factAddress,
-  
+
           merchantId: +this.merchant.id,
           companyName: this.merchant.companyName,
           companyType: this.merchant.companyType,
@@ -152,9 +153,9 @@ export class Step3Component implements OnInit {
         this.signUpForm.patchValue({
           responsiblePersonLastName: this.merchant.responsiblePersonLastName,
           responsiblePersonFistName: this.merchant.responsiblePersonFistName,
-          registrationCertificateFilePath: this.merchant.registrationCertificateFilePath,
-          passportFilePath: this.merchant.passportFilePath,
-          logoFilePath: this.merchant.logoFilePath,
+          registrationCertificate: this.merchant.registrationCertificate,
+          passport: this.merchant.passport,
+          logo: this.merchant.logo,
           responsbilePersonPhoneNumber: this.merchant.responsbilePersonPhoneNumber,
           supervisorFirstName: this.merchant.supervisorFirstName,
           supervisorLastName: this.merchant.supervisorLastName,

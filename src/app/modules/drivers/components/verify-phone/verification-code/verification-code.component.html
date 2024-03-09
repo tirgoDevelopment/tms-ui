@@ -1,0 +1,23 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">ПОДТВЕРЖДЕНИЕ</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="mat-typography m-auto">
+  <div class="flex justify-center">Введите 6 значный код отправлен на номер </div>
+  <b class="text-black flex justify-center mb-4"> {{data?.phone}}</b>
+  <code-input [disabled]="loading" [isCodeHidden]="false" [codeLength]="6" (codeChanged)="onCodeChanged($event)" (codeCompleted)="onCodeCompleted($event)"></code-input>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div>{{count ? count : '01:59'}}</div>
+  <button [disabled]="loading || !codeEntered" class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'" (click)="sendVerifyedCode()">
+    <span *ngIf="!loading">Отправить</span>
+    <mat-progress-spinner *ngIf="loading" [diameter]="24"
+    [mode]="'indeterminate'"></mat-progress-spinner>
+</button>
+
+  <div class="inline-flex items-center justify-between w-full mt-4">
+    <a disabled="loading" class="text-md font-medium m-auto cursor-pointer" (click)="retrySms()">Запросить еще раз</a>
+  </div>
+</mat-dialog-actions>
