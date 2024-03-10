@@ -47,7 +47,7 @@
               {{data.additionalDeliveryLocation}}</p>
           </div>
 
-          <div>
+          <!-- <div>
             <p class="text-lg mb-1">Тип груза</p>
             <p class="font-bold">{{data.cargoType.name}}</p>
           </div>
@@ -62,7 +62,7 @@
             <p class="font-bold" *ngFor="let item of data.transportKinds">
               {{item.name}}
             </p>
-          </div>
+          </div> -->
           <div>
             <p class="text-lg mb-1">Размер груза</p>
             <p class="font-bold">
@@ -79,7 +79,7 @@
             </p>
 
           </div>
-          <div>
+          <!-- <div>
             <p class="text-lg mb-1">Стоимость</p>
             <p class="font-bold">
               {{ data.offeredPrice ? data.offeredPrice + ' ' + data.offeredPriceCurrency.name : 'Не указана' }}
@@ -91,7 +91,7 @@
             <p class="font-bold">
               {{ data.inAdvancePrice ? data.inAdvancePrice + ' ' + data.inAdvancePriceCurrencyId.name : 'Не указана' }}
             </p>
-          </div>
+          </div> -->
 
           <div>
             <p class="text-lg mb-1">Дата оформления заказа</p>
@@ -189,14 +189,13 @@
             <p class="font-bold">
               {{data.cargoPackage ? 'data.cargoPackage' : 'Не указана'}}</p>
           </div>
-          cargoPackage
         </div>
       </div>
 
     </mat-dialog-content>
 
   </mat-tab>
-  <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
+  <!-- <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
     <div
       class="max-w-sm p-4 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       *ngFor="let offer of data.driverOffers">
@@ -243,5 +242,5 @@
 
       </div>
     </div>
-  </mat-tab>
+  </mat-tab> -->
 </mat-tab-group>

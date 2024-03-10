@@ -3,7 +3,7 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
   {
     id: 'orders',
-    title: 'Грузы',
+    title: 'Управление заказами',
     type: 'collapsable',
     icon: 'cargo.svg',
     children: [

@@ -21,7 +21,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
                
                 authService.signOut();
 
-                location.reload();
+                // location.reload();
             }
             return throwError(error);
         }),
