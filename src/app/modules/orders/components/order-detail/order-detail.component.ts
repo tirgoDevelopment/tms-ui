@@ -46,22 +46,6 @@ export class OrderDetailComponent implements OnInit {
     private toastr: ToastrService
   ) { }
   ngOnInit(): void {
-    this.typesService.getCurrencies().subscribe((res: any) => {
-      if (res.success) {
-        this.currencies = res.data;
-      }
-    })
-    this.sseSubscription = this.sseService.getUpdates().subscribe(
-      (data) => {
-        if (data.type == 'driverAcceptOffer' || data.type == 'driverOffer' || data.type == 'driverOffer') {
-          this.getOrderById();
-        }
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-    this.updateDriverOffers();
   }
   getOrderById() {
     // this.orderService.getOrderById(this.data.id).subscribe((res: any) => {

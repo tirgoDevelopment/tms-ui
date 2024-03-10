@@ -1,89 +1,150 @@
 <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent p-4">
-  <div class="flex">
-    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
-      <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+  <div class="flex justify-between items-center my-5">
+    <div class="text-3xl font-bold">Доступные заказы</div>
+    <div class="flex justify-end gap-2">
+      <button class="fuse-mat-button-large dark dark:bg-[#1E293BDB]" mat-flat-button [color]="'primary'"
+        (click)="showFilter = !showFilter">
+        <mat-icon>search</mat-icon>
+        Поиск
+      </button>
     </div>
-    <div class="text-3xl font-bold tracking-tight">Доступные заказы</div>
   </div>
 
-  <div class="my-4">
-    <mat-table [dataSource]="dataSource" class="table">
+  <div class="filter flex items-center gap-2" [@showHideFilter]="showFilter ? 'show' : 'hide'">
+    <div>
+      <mat-form-field class="flex-auto">
+        <mat-label>Груз ID</mat-label>
+        <input type="number" matInput [(ngModel)]="filter.id">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="flex-auto">
+        <mat-label>Откуда</mat-label>
+        <input type="text" matInput [(ngModel)]="filter.loadingLocation">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="flex-auto">
+        <mat-label>Куда</mat-label>
+        <input type="text" matInput [(ngModel)]="filter.deliveryLocation">
+      </mat-form-field>
+    </div>
+
+    <button (click)="resetSearch()" class="fuse-mat-button-large dark dark:bg-[#1E293BDB]" mat-flat-button
+      [color]="'primary'">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button (click)="applyFilter()" class="fuse-mat-button-large dark dark:bg-[#1E293BDB]" mat-flat-button
+      [color]="'primary'">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div class="mat-elevation-z8 my-6 relative">
+    <div class="loading-shade" *ngIf="isLoading">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+
       <ng-container matColumnDef="index">
-        <mat-header-cell class="font-extrabold index-column " *matHeaderCellDef> No </mat-header-cell>
-        <mat-cell class="index-column relative" *matCellDef="let row; let i=index">
-          <div>
-            {{ i + 1 }}
-            <div
-              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-green-700 border-1 border-white rounded-full top-0 right-0 dark:border-gray-900"
-              *ngIf="row.driverOffers.length > 0 && row.cargoStatus.code == 0">
-              {{row.driverOffers.length}}</div>
-          </div>
-        </mat-cell>
+        <th class="font-extrabold" mat-header-cell *matHeaderCellDef> No </th>
+        <td mat-cell *matCellDef="let row; let i=index"> {{ i + 1 }} </td>
       </ng-container>
 
       <ng-container matColumnDef="id">
-        <mat-header-cell class="font-extrabold index-column" *matHeaderCellDef mat-sort-header> ID
-        </mat-header-cell>
-        <mat-cell class="index-column" *matCellDef="let row"> {{ row?.id }} </mat-cell>
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer" (click)="sortData('id')">
+          <div class="flex justify-between items-center">
+            <div>ID</div>
+            <mat-icon>{{ getSortIcon('id') }}</mat-icon>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row;">
+          {{ row.id }}
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="sendLocation">
-        <mat-header-cell *matHeaderCellDef>Маршрут Откуда</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row?.loadingLocation}} </mat-cell>
+      <ng-container matColumnDef="loadingLocation">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer"
+          (click)="sortData('loadingLocation')">
+          <div class="flex justify-between items-center">
+            <div>Откуда</div>
+            <mat-icon>{{ getSortIcon('loadingLocation') }}</mat-icon>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.loadingLocation}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="cargoDeliveryLocation">
-        <mat-header-cell *matHeaderCellDef>Маршрут куда</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row?.deliveryLocation}} </mat-cell>
+
+      <ng-container matColumnDef="deliveryLocation">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer"
+          (click)="sortData('deliveryLocation')">
+          <div class="flex justify-between items-center">
+            <div>Куда</div>
+            <mat-icon>{{ getSortIcon('deliveryLocation') }}</mat-icon>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.deliveryLocation}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="date_send">
-        <mat-header-cell *matHeaderCellDef>Дата погрузки</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ (row.isUrgent ? addTwoDays(row.createdAt) : row.createdAt) | date : 'dd.MM.YYYY'}}
-        </mat-cell>
+      <ng-container matColumnDef="sendDate">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer" (click)="sortData('sendDate')">
+          <div class="flex justify-between items-center">
+            <div>Дата погрузки</div>
+            <mat-icon>{{ getSortIcon('sendDate') }}</mat-icon>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row"> {{ row.sendDate | date : 'dd.MM.YYYY'}}
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="secure_transaction">
-        <mat-header-cell *matHeaderCellDef>Безопасная сделка</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.isSafe ? 'Да':'Нет'}}</mat-cell>
+      <ng-container matColumnDef="isSafe">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold">
+          Безопасная сделка
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.isSafe ? 'Да':'Нет'}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="transport_kind">
-        <mat-header-cell *matHeaderCellDef>Вид транспорта</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ row.transport_kind }}
-        </mat-cell>
+
+      <ng-container matColumnDef="transport_type">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold ">
+          Тип транспорта
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="row.transportTypes">
+            <span *ngFor="let type of row.transportTypes;let i=index">
+              {{type.name}} <br>
+            </span>
+          </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="offeredPrice">
-        <mat-header-cell *matHeaderCellDef>Предложенная цена</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ row.offeredPrice ? row.offeredPrice + ' ' + row.offeredPriceCurrency.name: 'Не указана' }}
-        </mat-cell>
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer" (click)="sortData('offeredPrice')">
+          <div class="flex justify-between items-center">
+            <div>Предлагаемая стоимость</div>
+            <mat-icon>{{ getSortIcon('offeredPrice') }}</mat-icon>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{
+          row.offeredPrice
+          ? (row.offeredPriceCurrency !== null ? row.offeredPrice + ' ' + row.offeredPriceCurrency : row.offeredPrice)
+          : 'Не указана'
+          }} </td>
       </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;let i=index" (click)="showOrderDetails(row)"
+        class="cursor-pointer"
+        [ngClass]="{'odd:bg-[#EFEFEF] dark:odd:bg-[#1E293BDB]': row, 'even:bg-white dark:even:bg-[#1E293BDB]': row}">
+      </tr>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns; let i=index" (click)="showOrderDetails(row)"></mat-row>
-
-    </mat-table>
-
-    <div class="w-full flex justify-center p-2 border" *ngIf="!isLoading && !dataSource?.length">
-      Данные отсутствуют в таблице
-    </div>
-
-    <div class="w-full flex justify-center p-2 border" *ngIf="isLoading">
-      <mat-progress-spinner [diameter]="32" [mode]="'indeterminate'"></mat-progress-spinner>
-    </div>
-
-    <div class="flex justify-end">
-      <app-pagination [totalPagesCount]="totalPagesCount" [size]="size" [currentPage]="currentPage"
-        (paginationEvent)="onPaginationEvent($event)">
-      </app-pagination>
-
-    </div>
-
+    </table>
+  <div class="flex justify-center p-5 font-bold text-lg text-slate-600 " *ngIf="!dataSource?.length">
+    Данные отсутствуют в таблице
   </div>
+  <app-pagination *ngIf="dataSource?.length" [totalPagesCount]="totalPagesCount" [size]="size"
+    [currentPage]="currentPage" (paginationEvent)="onPaginationEvent($event)">
+  </app-pagination>
 
 </div>
