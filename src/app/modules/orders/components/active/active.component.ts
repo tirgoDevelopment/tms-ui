@@ -103,11 +103,6 @@ export class ActiveOrdersComponent implements OnInit {
         }, 500)
         this.dataSource = success ? data : [];
         this.totalPagesCount = totalPagesCount;
-        this.dataSource.forEach(v => {
-          if (v.driverOffers && Array.isArray(v.driverOffers)) {
-            v.driverOffers = v.driverOffers.filter(offer => !offer.rejected);
-          }
-        });
       },
       error: () => {
         this.isLoading = false;

@@ -12,7 +12,7 @@
         <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
         </ya-map>
       </div>
-      <div class="max-w-md mx-auto mt-3 bg-white rounded-lg shadow-md">
+      <div class="max-w-md mx-auto mt-3 rounded-lg">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-lg mb-1">Откуда</p>
@@ -47,7 +47,7 @@
               {{data.additionalDeliveryLocation}}</p>
           </div>
 
-          <!-- <div>
+          <div>
             <p class="text-lg mb-1">Тип груза</p>
             <p class="font-bold">{{data.cargoType.name}}</p>
           </div>
@@ -62,7 +62,7 @@
             <p class="font-bold" *ngFor="let item of data.transportKinds">
               {{item.name}}
             </p>
-          </div> -->
+          </div>
           <div>
             <p class="text-lg mb-1">Размер груза</p>
             <p class="font-bold">
@@ -77,9 +77,9 @@
             <p class="font-bold">
               {{ data.cargoWeight ? data.cargoWeight + 'кг' : 'Не указана' }}
             </p>
-
           </div>
-          <!-- <div>
+
+          <div>
             <p class="text-lg mb-1">Стоимость</p>
             <p class="font-bold">
               {{ data.offeredPrice ? data.offeredPrice + ' ' + data.offeredPriceCurrency.name : 'Не указана' }}
@@ -89,9 +89,9 @@
           <div>
             <p class="text-lg mb-1">Аванс</p>
             <p class="font-bold">
-              {{ data.inAdvancePrice ? data.inAdvancePrice + ' ' + data.inAdvancePriceCurrencyId.name : 'Не указана' }}
+              {{ data.inAdvancePrice ? data.inAdvancePrice + ' ' + data.inAdvancePriceCurrency.name : 'Не указана' }}
             </p>
-          </div> -->
+          </div>
 
           <div>
             <p class="text-lg mb-1">Дата оформления заказа</p>
@@ -99,7 +99,7 @@
           </div>
           <div>
             <p class="text-lg mb-1">Заказ назначен на</p>
-            <p class="font-bold">{{data.sendDate | dateFormat }}</p>
+            <p class="font-bold">{{data.sendDate | dateFormat:false }}</p>
           </div>
           <div>
             <p class="text-lg mb-1">Статус</p>
@@ -182,20 +182,24 @@
           <div>
             <p class="text-lg mb-1">Способ погрузки</p>
             <p class="font-bold">
-              {{data.loadingMethod ? 'data.loadingMethod' : 'Не указана'}}</p>
+              {{data.loadingMethod ? data.loadingMethod : 'Не указана'}}</p>
           </div>
           <div>
             <p class="text-lg mb-1">Упаковка</p>
             <p class="font-bold">
-              {{data.cargoPackage ? 'data.cargoPackage' : 'Не указана'}}</p>
+              {{data.cargoPackage ? data.cargoPackage : 'Не указана'}}</p>
           </div>
         </div>
+        <div class="my-8">
+          <button *ngIf="data.cargoStatus.code == 0" class="fuse-mat-button bg-[#F97C00] text-white" mat-flat-button (click)="assignDriver()">
+            Назначить Водителя
+          </button>
+        </div>
       </div>
-
+     
     </mat-dialog-content>
-
   </mat-tab>
-  <!-- <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
+  <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
     <div
       class="max-w-sm p-4 my-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       *ngFor="let offer of data.driverOffers">
@@ -225,14 +229,14 @@
       </div>
 
       <div class="flex gap-2 w-full" *ngIf="data.cargoStatus.code == 0">
-        <button *ngIf="offer.createdBy.userType !== 'client_merchant_user' && !editing" (click)="editOffer(offer)"
+        <button *ngIf="offer.createdBy.userType !== 'driver_merchant_user' && !editing" (click)="editOffer(offer)"
           type="button"
           class="px-3 py-2 hover:bg-primary hover:text-white hover:border-primary text-primary border border-primary text-sm font-medium rounded-lg mt-3 w-full">Изменить</button>
 
         <button *ngIf="!editing" (click)="acceptDriver(offer)" type="button"
-          [disabled]="offer.createdBy.userType == 'client_merchant_user'"
+          [disabled]="offer.createdBy.userType == 'driver_merchant_user'"
           class="px-3 py-2 text-white text-sm bg-primary font-medium rounded-lg mt-3 w-full hover:opacity-95">{{offer.createdBy.userType
-          == 'client_merchant_user' ? 'Ожидание запроса' : 'Принять'}}</button>
+          == 'driver_merchant_user' ? 'Ожидание запроса' : 'Принять'}}</button>
 
         <button *ngIf="editing" (click)="cancelEditing()" type="button"
           class="px-3 py-2 hover:bg-primary hover:text-white hover:border-primary text-primary border border-primary text-sm font-medium rounded-lg mt-3 w-full">Отменить</button>
@@ -242,5 +246,5 @@
 
       </div>
     </div>
-  </mat-tab> -->
+  </mat-tab>
 </mat-tab-group>

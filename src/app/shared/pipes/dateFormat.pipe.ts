@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'dateFormat'
 })
 export class DateFormatPipe implements PipeTransform {
-  transform(value: string): string {
+  transform(value: string, includeTime: boolean = true): string {
     const months = [
       "январь", "февраль", "март", "апрель", "май", "июнь",
       "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
@@ -17,6 +17,12 @@ export class DateFormatPipe implements PipeTransform {
     const hours = date.getUTCHours().toString().padStart(2, '0');
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
 
-    return `${day} ${months[monthIndex]} ${year} в ${hours}:${minutes}`;
+    let formattedDate = `${day} ${months[monthIndex]} ${year}`;
+
+    if (includeTime) {
+      formattedDate += ` в ${hours}:${minutes}`;
+    }
+
+    return formattedDate;
   }
 }

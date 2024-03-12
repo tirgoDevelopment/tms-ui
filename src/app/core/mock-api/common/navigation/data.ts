@@ -5,7 +5,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     id: 'orders',
     title: 'Управление заказами',
     type: 'collapsable',
-    icon: 'cargo.svg',
+    icon: 'cargo-box.svg',
     children: [
       {
         id: 'available-order',

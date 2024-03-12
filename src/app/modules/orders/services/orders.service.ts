@@ -20,7 +20,7 @@ export class OrdersService {
     return this.http.get(url);
   }
   getActiveOrders(id,pag,filter?, sortBy?, sortType?) {
-    let url = `${env.apiOrders}/orders/drivers/active-order-by?driverId=${id}&pageSize=${pag.size}&pageIndex=${pag.currentPage}`;
+    let url = `${env.apiOrders}/orders/drivers/merchant-active-orders?merchantId=${id}&pageSize=${pag.size}&pageIndex=${pag.currentPage}`;
     if (filter) {
       url += `&${filter}`;
     }
@@ -39,5 +39,17 @@ export class OrdersService {
     }
     return this.http.get(url);
   }
-
+  getOrderById(id) {
+    return this.http.get(env.apiOrders + '/orders/drivers/order-by-id?orderId=' + id);
+  }
+  assignDriver(data) {
+    return this.http.post(env.apiOrders+ '/orders/drivers/offer-price', data)
+  }
+  acceptOffer(id) {
+    // @ts-ignore
+    return this.http.post(env.apiOrders + '/orders/drivers/accept-offer?id='+id)
+  }
+  contrOffer(data) {
+    return this.http.post(env.apiOrders + '/orders/drivers/offer-price',data)
+  }
 }
