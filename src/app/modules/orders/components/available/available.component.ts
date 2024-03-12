@@ -122,11 +122,6 @@ export class AvailableOrdersComponent implements OnInit {
     //   }
     // })
   }
-  addTwoDays(date: Date): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() + 2);
-    return result;
-  }
   showOrderDetails(order) {
     const dialogRef = this.dialog.open(OrderDetailComponent, {
       height: '100vh',
@@ -192,5 +187,5 @@ export class AvailableOrdersComponent implements OnInit {
     }
     return 'unfold_more';
   }
-
+ 
 }

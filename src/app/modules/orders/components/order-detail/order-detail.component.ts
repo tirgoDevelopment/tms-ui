@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { OrdersService } from '../../services/orders.service';
 import { ToastrService } from 'ngx-toastr';
 import { TypesService } from 'app/shared/services/types.service';
+import { AssignDriverComponent } from '../assign-driver/assign-driver.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -46,33 +47,26 @@ export class OrderDetailComponent implements OnInit {
     private toastr: ToastrService
   ) { }
   ngOnInit(): void {
+    this.typesService.getCurrencies().subscribe((res: any) => {
+      if (res.success) {
+        this.currencies = res.data;
+      }
+    })
   }
   getOrderById() {
-    // this.orderService.getOrderById(this.data.id).subscribe((res: any) => {
-    //   if (res.success) {
-    //     this.data = res.data;
-    //     this.updateDriverOffers();
-    //   }
-    // })
+    this.orderService.getOrderById(this.data.id).subscribe((res: any) => {
+      if (res.success) {
+        this.data = res.data;
+        this.updateDriverOffers();
+      }
+    })
   }
-  acceptDriver(offer) {
-    // if (this.data.isSafeTransaction) {
-    //   const dialogRef = this.dialog.open(ScoreComponent, {
-    //     autoFocus: false,
-    //     disableClose: true,
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => { });
-    // }
-    // else {
-    //   this.orderService.acceptOffer(offer.id).subscribe((res: any) => {
-    //     if (res.success) {
-    //       this.toastr.success('Success')
-    //     }
-    //   }, error => {
-    //     this.toastr.error(error.error.message)
-    //   })
-    //   this.dialog.closeAll();
-    // }
+  assignDriver() {
+    const dialogRef = this.dialog.open(AssignDriverComponent, {
+      autoFocus: false,
+      disableClose: true,
+      data: this.data
+    });    
   }
   editOffer(offer) {
     this.editing = true;
@@ -85,25 +79,25 @@ export class OrderDetailComponent implements OnInit {
 
   }
   saveEditedOffer(offer) {
-    // if (this.originalAmount == this.editedAmount) {
-    //   this.toastr.error('Предложение о сумме не редактировалось')
-    // }
-    // else {
-    //   let data = {
-    //     orderId: this.data.id,
-    //     driverId: offer.driver.id,
-    //     amount: this.editedAmount,
-    //     curencyId: this.editedCurrencyId
-    //   }
-    //   this.orderService.contrOffer(data).subscribe((res: any) => {
-    //     if (res.success) {
-    //       this.toastr.success('Updated');
-    //       this.dialog.closeAll();
-    //     }
-    //   }, error => {
-    //     this.toastr.error(error.error.message);
-    //   })
-    // }
+    if (this.originalAmount == this.editedAmount) {
+      this.toastr.warning('Предложение о сумме не редактировалось')
+    }
+    else {
+      let data = {
+        orderId: this.data.id,
+        driverId: offer.driver.id,
+        amount: this.editedAmount,
+        curencyId: this.editedCurrencyId
+      }
+      this.orderService.contrOffer(data).subscribe((res: any) => {
+        if (res.success) {
+          this.toastr.success('Updated');
+          this.dialog.closeAll();
+        }
+      }, error => {
+        this.toastr.error(error.error.message);
+      })
+    }
   }
   cancelEditing() {
     this.editedAmount = this.originalAmount;

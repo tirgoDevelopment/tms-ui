@@ -41,13 +41,10 @@ export class SettingsComponent implements OnInit {
     this.currentUser = jwtDecode(this.authService.accessToken);
 
     this.form = this.formBuilder.group({
-      userId: [null],
+      userId: [this.currentUser.userId],
       password: [null, Validators.required],
       newPassword: [null, Validators.required],
       confirmPassword: [null, Validators.required]
-    })
-    this.form.patchValue({
-      userId: this.currentUser.userId
     })
   }
 
@@ -79,8 +76,10 @@ export class SettingsComponent implements OnInit {
         if(err.error.message == 'invalidPassword') {
           this.toastr.error('Неверный старый пароль ');
           this.loading = false;
+        }else {
+          this.toastr.error(err.error.message);
+          this.loading = false;
         }
-        this.loading = false;
       })
     }
     

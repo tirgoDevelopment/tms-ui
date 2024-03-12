@@ -69,7 +69,7 @@ export class AuthService {
   }
   redirect(curMerch) {
     if(curMerch.completed && curMerch.verified) {
-      this.router.navigate(['/orders'])
+      this.router.navigate(['/orders/available'])
     }
     if (curMerch.completed && !curMerch.verified) {
       this.router.navigate(['/auth/sign-up'])

@@ -10,6 +10,6 @@ export class SettingService {
   ) { }
 
   changePassword(data) {
-    return this.http.patch(env.apiUsers + '/users/client-merchant-user/password?userId='+data.userId, data)
+    return this.http.patch(env.apiUsers + '/users/driver-merchant-user/password?userId='+data.userId, data)
   }
 }

@@ -1,0 +1,30 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">Назначить водителя</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll" #signInNgForm="ngForm">
+  <div class="flex flex-col">
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Введите ID водителя</mat-label>
+      <input matInput formControlName="driverId" type="number" />
+    </mat-form-field>
+  
+    <mat-form-field class="flex-auto">
+      <mat-label>Цена</mat-label>
+      <input matInput formControlName="amount" type="number">
+      <mat-select formControlName="curencyId" matPrefix>
+        <mat-option *ngFor="let item of currencies" [value]="item.id">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'" [disabled]="form.disabled"
+    (click)="submit()">
+    <span *ngIf="!form.disabled">
+      Назначить
+    </span>
+    <mat-progress-spinner *ngIf="form.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+  </button>
+</form>

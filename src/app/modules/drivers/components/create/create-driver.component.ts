@@ -121,17 +121,4 @@ export class CreateDriverComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
-
-   // Helper function to get phoneNumbers FormArray
-   get phoneNumbers(): FormArray {
-    return this.form.get('phoneNumbers') as FormArray;
-  }
-
-  // Add phone number control to the FormArray
-  addPhoneNumber() {
-    this.phoneNumbers.push(this.formBuilder.control(null));
-  }
-  removePhoneNumber(index: number) {
-    this.phoneNumbers.removeAt(index);
-  }
 }

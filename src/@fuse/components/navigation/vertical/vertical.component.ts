@@ -176,30 +176,30 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
      *
      * @private
      */
-    // @HostListener('mouseenter')
-    // private _onMouseenter(): void
-    // {
-    //     // Enable the animations
-    //     this._enableAnimations();
+    @HostListener('mouseenter')
+    private _onMouseenter(): void
+    {
+        // Enable the animations
+        this._enableAnimations();
 
-    //     // Set the hovered
-    //     this._hovered = true;
-    // }
+        // Set the hovered
+        this._hovered = true;
+    }
 
     // /**
     //  * On mouseleave
     //  *
     //  * @private
     //  */
-    // @HostListener('mouseleave')
-    // private _onMouseleave(): void
-    // {
-    //     // Enable the animations
-    //     this._enableAnimations();
+    @HostListener('mouseleave')
+    private _onMouseleave(): void
+    {
+        // Enable the animations
+        this._enableAnimations();
 
-    //     // Set the hovered
-    //     this._hovered = false;
-    // }
+        // Set the hovered
+        this._hovered = false;
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

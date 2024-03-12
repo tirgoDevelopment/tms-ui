@@ -46,7 +46,15 @@
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="index">
         <th class="font-extrabold" mat-header-cell *matHeaderCellDef> No </th>
-        <td mat-cell *matCellDef="let row; let i=index"> {{ i + 1 }} </td>
+        <td mat-cell *matCellDef="let row; let i=index"> 
+          <div>
+            {{ i + 1 }}
+            <div
+              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-green-700 border-1 border-white rounded-full top-0 left-0 dark:border-gray-900"
+              *ngIf="row.driverOffers.length > 0 && row.cargoStatus.code == 0">
+              {{row.driverOffers.length}}</div>
+          </div>  
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="id">

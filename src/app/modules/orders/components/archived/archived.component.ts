@@ -86,7 +86,7 @@ export class ArchivedOrdersComponent implements OnInit {
     const request$ = of({ filter, sortBy, sortType }).pipe(
       switchMap(({ filter, sortBy, sortType }) => {
         const requestParams = { filter, sortBy, sortType };
-        return this.orderService.getActiveOrders(this.currentUser.merchantId, pagination, filter, sortBy, sortType).pipe(
+        return this.orderService.getArchiveOrders(this.currentUser.merchantId, pagination, filter, sortBy, sortType).pipe(
           map((res: any) => ({
             success: res.success, data: res.data, totalPagesCount: res.totalPagesCount
           })),
