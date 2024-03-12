@@ -16,11 +16,11 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-lg mb-1">Откуда</p>
-            <p class="font-bold">{{data.loadingLocation}}</p>
+            <p class="font-bold">{{data.loadingLocation.name}}</p>
           </div>
           <div>
             <p class="text-lg mb-1">Куда</p>
-            <p class="font-bold">{{data.deliveryLocation}}</p>
+            <p class="font-bold">{{data.deliveryLocation.name}}</p>
           </div>
           
           <div *ngIf="data.customsPlaceLocation">
