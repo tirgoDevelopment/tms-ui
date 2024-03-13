@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -12,9 +12,16 @@ import { provideTransloco } from 'app/core/transloco/transloco.provider';
 import { mockApiServices } from './core/mock-api';
 import { provideToastr } from 'ngx-toastr';
 import { provideNgxMask } from 'ngx-mask';
+import { AngularYandexMapsModule, YaConfig } from 'angular8-yandex-maps';
+
+const mapConfig: YaConfig = {
+    apikey: 'df0cb391-97e5-47ce-a954-f54cb0644e56',
+    lang: 'ru_RU',
+};
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        importProvidersFrom(AngularYandexMapsModule.forRoot(mapConfig)),
         provideNgxMask(),
         provideToastr(),
         provideAnimations(),

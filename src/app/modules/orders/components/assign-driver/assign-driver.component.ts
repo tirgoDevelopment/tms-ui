@@ -73,6 +73,9 @@ export class AssignDriverComponent implements OnInit {
       if (err.error.message == 'alreadyOfferedToThisOrder') {
         this.toastr.error('Уже предлагался к этому заказу')
       }
+      if (err.error.message == 'driverHasOrder') {
+        this.toastr.error('У водителя есть Заказ')
+      }
       else {
         this.toastr.error(err.error.message)
       }
