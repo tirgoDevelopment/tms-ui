@@ -128,10 +128,10 @@
         </div>
         <p class="font-bold text-3xl mt-5 mb-5 w-80 m-auto">Ваша заявка принята на обработку</p>
         <p class="text-stone-400 mb-5">Ответ придет к вам на почту</p>
-        <!-- <a class="fuse-mat-button-large dark me-auto mt-6 mb-6" routerLink="/auth/sign-in" mat-flat-button
+        <a class="fuse-mat-button-large dark me-auto mt-6 mb-6" (click)="authService.signOut()" mat-flat-button
           [color]="'primary'">
           Авторизоваться
-        </a> -->
+        </a>
       </div>
     </div>
   </div>

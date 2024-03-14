@@ -11,14 +11,14 @@
       <form [formGroup]="verifyPhoneForm" class="mt-8" #verifyPhoneNgForm="ngForm" (ngSubmit)="verifyPhone()">
 
         <div class="form-width">
-          <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
-            <mat-label>Телефон</mat-label>
-            <ngx-mat-intl-tel-input formControlName="phone" [preferredCountries]="['uz']"
-              [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="phone" #phone>
-            </ngx-mat-intl-tel-input>
+          <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full dark:bg-gray-800">
+              <mat-label class="dark:text-white">Телефон</mat-label>
+              <ngx-mat-intl-tel-input formControlName="phone" [preferredCountries]="['uz']"
+                  [onlyCountries]="['uz','kz','tj','kg','ru','af']" name="phone" #phone
+                  class="dark:text-white">
+              </ngx-mat-intl-tel-input>
           </mat-form-field>
-        </div>
-
+      </div>
         <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
           [disabled]="verifyPhoneForm.disabled">
           <span *ngIf="!verifyPhoneForm.disabled">Отправить</span>
