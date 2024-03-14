@@ -74,7 +74,8 @@
 
     <!-- Icon -->
     <ng-container *ngIf="item.icon">
-        <img [src]="'assets/images/sidebar/'+item.icon" class="mr-3"  style="height:24px; width:24px">
+        <img *ngIf="this.config.scheme == 'light'" [src]="'assets/images/sidebar/'+item.icon" class="mr-3"  style="height:24px; width:24px">
+        <img *ngIf="this.config.scheme == 'dark'" [src]="'assets/images/sidebar/dark/'+item.icon" class="mr-3"  style="height:24px; width:24px">
     </ng-container>
 
     <!-- Title & Subtitle -->

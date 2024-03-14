@@ -23,6 +23,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { TypesService } from 'app/shared/services/types.service';
 import { OrdersService } from '../../services/orders.service';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { SseService } from 'app/shared/services/socket.service';
 
 @Component({
   selector: 'app-active-orders',
@@ -74,10 +75,21 @@ export class ActiveOrdersComponent implements OnInit {
   constructor(
     private orderService: OrdersService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private sseService: SseService
   ) { }
   ngOnInit(): void {
     this.currentUser = jwtDecode(this.authService.accessToken);
+    this.sseSubscription = this.sseService.getUpdates().subscribe(
+      (data) => {
+        if (data.type == 'clientAcceptOffer' || data.type == 'clientOffer') {
+          this.getOrders();
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
     this.getOrders();
   }
   getOrders(filter?: any, sortBy?: string, sortType?: string) {

@@ -12,6 +12,7 @@ import { FuseVerticalNavigationDividerItemComponent } from '@fuse/components/nav
 import { FuseVerticalNavigationGroupItemComponent } from '@fuse/components/navigation/vertical/components/group/group.component';
 import { FuseVerticalNavigationSpacerItemComponent } from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
+import { FuseConfig, FuseConfigService } from '@fuse/services/config';
 import { TranslocoModule } from '@ngneat/transloco';
 import { filter, Subject, takeUntil } from 'rxjs';
 
@@ -25,6 +26,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
 })
 export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, OnDestroy
 {
+    config:any;
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_autoCollapse: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -45,6 +47,7 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _fuseNavigationService: FuseNavigationService,
+        private _fuseConfigService: FuseConfigService,
     )
     {
     }
@@ -75,6 +78,13 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
      */
     ngOnInit(): void
     {
+        this._fuseConfigService.config$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((config: FuseConfig) => {
+            // Store the config
+            this.config = config;
+            this._changeDetectorRef.detectChanges();
+        });
         // Get the parent navigation component
         this._fuseVerticalNavigationComponent = this._fuseNavigationService.getComponent(this.name);
 

@@ -6,6 +6,7 @@ import { IsActiveMatchOptions, RouterLink, RouterLinkActive } from '@angular/rou
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
+import { FuseConfig, FuseConfigService } from '@fuse/services/config';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Subject, takeUntil } from 'rxjs';
@@ -19,6 +20,8 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestroy
 {
+    config:any;
+
     @Input() item: FuseNavigationItem;
     @Input() name: string;
 
@@ -33,7 +36,8 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseUtilsService: FuseUtilsService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private _fuseConfigService: FuseConfigService
     )
     {
         // Set the equivalent of {exact: false} as default for active match options.
@@ -52,6 +56,13 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
      */
     ngOnInit(): void
     {
+        this._fuseConfigService.config$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((config: FuseConfig) => {
+            // Store the config
+            this.config = config;
+            this.cdr.detectChanges();
+        });
         this.cdr.detectChanges();
         // Set the "isActiveMatchOptions" either from item's
         // "isActiveMatchOptions" or the equivalent form of

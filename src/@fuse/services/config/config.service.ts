@@ -36,8 +36,10 @@ export class FuseConfigService
     // eslint-disable-next-line @typescript-eslint/member-ordering
     get config$(): Observable<any>
     {
+        //@ts-ignore
         return this._config.asObservable();
     }
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
