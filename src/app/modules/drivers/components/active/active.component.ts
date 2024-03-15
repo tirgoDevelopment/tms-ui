@@ -87,7 +87,7 @@ export class ActiveDriversComponent implements OnInit {
   getData(filter?: any, sortBy?: string, sortType?: string) {
     this.isLoading = true;
     this.driverService.getActiveDrivers(this.currentUser.merchantId).subscribe((res:any) => {
-      if(res.success) {
+      if(res && res.success) {
         this.isLoading = false;
         this.dataSource = res.data;
       }
