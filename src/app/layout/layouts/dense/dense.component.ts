@@ -67,6 +67,8 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // const scheme:any = localStorage.getItem('tmcMode');
+        // this.setScheme(scheme);
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -123,6 +125,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     }
 
     setScheme(scheme: Scheme): void {
+        // localStorage.setItem('tmcMode', scheme);
         this._fuseConfigService.config = { scheme };
     }
 

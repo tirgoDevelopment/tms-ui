@@ -48,7 +48,15 @@
 
       <ng-container matColumnDef="index">
         <th class="font-extrabold" mat-header-cell *matHeaderCellDef> No </th>
-        <td mat-cell *matCellDef="let row; let i=index"> {{ i + 1 }} </td>
+        <td class="relative" mat-cell *matCellDef="let row; let i=index">
+          <div>
+            {{ i + 1 }}
+            <div
+              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-green-700 border-1 border-white rounded-full top-0 left-0 dark:border-gray-900"
+              *ngIf="row.driverOffers.length > 0 && row.cargoStatus.code == 0">
+              {{row.driverOffers.length}}</div>
+          </div>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="id">
@@ -64,30 +72,33 @@
       </ng-container>
 
       <ng-container matColumnDef="loadingLocation">
-        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer"
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer truncate-cell"
           (click)="sortData('loadingLocation')">
           <div class="flex justify-between items-center">
             <div>Откуда</div>
             <mat-icon>{{ getSortIcon('loadingLocation') }}</mat-icon>
           </div>
         </th>
-        <td mat-cell *matCellDef="let row">{{row.loadingLocation.name}}</td>
+        <td class="truncate-cell" mat-cell *matCellDef="let row" [matTooltip]="row.loadingLocation?.name">
+          {{row.loadingLocation?.name}}</td>
       </ng-container>
 
 
       <ng-container matColumnDef="deliveryLocation">
-        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer"
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer truncate-cell"
           (click)="sortData('deliveryLocation')">
           <div class="flex justify-between items-center">
             <div>Куда</div>
             <mat-icon>{{ getSortIcon('deliveryLocation') }}</mat-icon>
           </div>
         </th>
-        <td mat-cell *matCellDef="let row">{{row.deliveryLocation.name}}</td>
+        <td class="truncate-cell" mat-cell *matCellDef="let row" [matTooltip]="row.deliveryLocation?.name">
+          {{row.deliveryLocation?.name}}</td>
       </ng-container>
 
       <ng-container matColumnDef="sendDate">
-        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer" (click)="sortData('sendDate')">
+        <th mat-header-cell *matHeaderCellDef class="font-extrabold cursor-pointer truncate-cell"
+          (click)="sortData('sendDate')">
           <div class="flex justify-between items-center">
             <div>Дата погрузки</div>
             <mat-icon>{{ getSortIcon('sendDate') }}</mat-icon>
@@ -128,7 +139,8 @@
         <td mat-cell *matCellDef="let row">
           {{
           row.offeredPrice
-          ? (row.offeredPriceCurrency !== null ? row.offeredPrice + ' ' + row.offeredPriceCurrency.name : row.offeredPrice)
+          ? (row.offeredPriceCurrency !== null ? row.offeredPrice + ' ' + row.offeredPriceCurrency.name :
+          row.offeredPrice)
           : 'Не указана'
           }} </td>
       </ng-container>
@@ -140,11 +152,11 @@
       </tr>
 
     </table>
-  <div class="flex justify-center p-5 font-bold text-lg text-slate-600 " *ngIf="!dataSource?.length">
-    Данные отсутствуют в таблице
-  </div>
-  <app-pagination *ngIf="dataSource?.length" [totalPagesCount]="totalPagesCount" [size]="size"
-    [currentPage]="currentPage" (paginationEvent)="onPaginationEvent($event)">
-  </app-pagination>
+    <div class="flex justify-center p-5 font-bold text-lg text-slate-600 " *ngIf="!dataSource?.length">
+      Данные отсутствуют в таблице
+    </div>
+    <app-pagination *ngIf="dataSource?.length" [totalPagesCount]="totalPagesCount" [size]="size"
+      [currentPage]="currentPage" (paginationEvent)="onPaginationEvent($event)">
+    </app-pagination>
 
-</div>
+  </div>

@@ -38,7 +38,7 @@ options = [5, 10, 20, 50]
   constructor() { }
 
   ngOnInit(): void {
-    this.totalPagesCount = 1
+    // this.totalPagesCount = 1
     setTimeout(() => {
       if (this.pageSizeOptions) {
         this.options = this.pageSizeOptions;

@@ -23,13 +23,14 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { TypesService } from 'app/shared/services/types.service';
 import { OrdersService } from '../../services/orders.service';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-archived-orders',
     templateUrl: './archived.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [PaginationComponent, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+    imports: [PaginationComponent,MatTooltipModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
     animations: [
       trigger('showHideFilter', [
         state('show', style({

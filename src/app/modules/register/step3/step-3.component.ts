@@ -1,4 +1,4 @@
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -44,6 +44,7 @@ export class Step3Component implements OnInit {
     private typesService: TypesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -188,6 +189,10 @@ export class Step3Component implements OnInit {
   toggleShowBankAccount2() {
     this.showBankAccount2 = !this.showBankAccount2;
     this.showTrashIcon = !this.showTrashIcon;
+  }
+  signOut(): void {
+    this.authService.signOut().subscribe(() => { })
+    location.reload();
   }
 }
 
