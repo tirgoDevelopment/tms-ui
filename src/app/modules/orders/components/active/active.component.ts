@@ -94,8 +94,6 @@ export class ActiveOrdersComponent implements OnInit {
     );
   }
   getOrders(filter?: any, sortBy?: string, sortType?: string) {
-    console.log('ok');
-    
     const pagination = { size: this.size, currentPage: this.currentPage };
     this.isLoading = true;
 

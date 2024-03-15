@@ -59,26 +59,36 @@ export class AssignDriverComponent implements OnInit {
 
   submit() {
     this.form.disable();
-    this.ordersService.assignDriver(this.form.value).subscribe((res: any) => {
-      if (res.success) {
-        this.form.enable();
-        this.toastr.success('Success')
-        this.dialog.closeAll();
-      }
-    }, err => {
+    if(this.form.value.driverId == null) {
       this.form.enable();
-      if (err.error.message == 'dataNotFound') {
-        this.toastr.error('Драйвер не найден')
-      }
-      if (err.error.message == 'alreadyOfferedToThisOrder') {
-        this.toastr.error('Уже предлагался к этому заказу')
-      }
-      if (err.error.message == 'driverHasOrder') {
-        this.toastr.error('У водителя есть Заказ')
-      }
-      else {
-        this.toastr.error(err.error.message)
-      }
-    })
+      this.toastr.error('Требуется указать ID водителя')
+    }
+    else if(this.form.value.amount == null) {
+      this.form.enable();
+      this.toastr.error('Требуется указать Цена')
+    }
+    else {
+      this.ordersService.assignDriver(this.form.value).subscribe((res: any) => {
+        if (res.success) {
+         this.form.enable();
+         this.toastr.success('Success')
+         this.dialog.closeAll();
+       }
+     }, err => {
+       this.form.enable();
+       if (err.error.message == 'dataNotFound') {
+         this.toastr.error('Драйвер не найден')
+       }
+       if (err.error.message == 'alreadyOfferedToThisOrder') {
+         this.toastr.error('Уже предлагался к этому заказу')
+       }
+       if (err.error.message == 'driverHasOrder') {
+         this.toastr.error('У водителя есть Заказ')
+       }
+       else {
+         this.toastr.error(err.error.message)
+       }
+     })
+    }
   }
 }  

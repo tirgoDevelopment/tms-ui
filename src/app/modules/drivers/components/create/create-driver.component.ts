@@ -81,6 +81,14 @@ export class CreateDriverComponent implements OnInit {
       this.form.enable();
       this.toastr.error('Требуется указать пароль');
     }
+    else if (this.form.value.driverLicense === null) {
+      this.form.enable();
+      this.toastr.error('Требуется указать Водительские права');
+    }
+    else if (this.form.value.passport === null) {
+      this.form.enable();
+      this.toastr.error('Требуется указать Паспорт');
+    }
     else {
       this.formData.append('firstName', this.form.value.firstName);
       this.formData.append('lastName', this.form.value.lastName);

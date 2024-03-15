@@ -13,7 +13,7 @@ export class DriversService {
     return this.http.get(env.apiUsers + '/users/drivers/by-driver-merchant?id='+id);
   }
   getArchivedDrivers(id) {
-    return this.http.get(env.apiUsers + '/users/drivers/merchant-archive-drivers?id='+id);
+    return this.http.get(env.apiUsers + '/users/drivers/merchant-archive-drivers?merchantId='+id);
   }
   createDriver(data) {
     return this.http.post(env.apiUsers + '/users/drivers/register',data);
