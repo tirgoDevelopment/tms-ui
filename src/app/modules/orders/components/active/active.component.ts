@@ -24,13 +24,14 @@ import { TypesService } from 'app/shared/services/types.service';
 import { OrdersService } from '../../services/orders.service';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { SseService } from 'app/shared/services/socket.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-active-orders',
   templateUrl: './active.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [PaginationComponent, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+  imports: [PaginationComponent,MatTooltipModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
   animations: [
     trigger('showHideFilter', [
       state('show', style({
@@ -80,6 +81,7 @@ export class ActiveOrdersComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.currentUser = jwtDecode(this.authService.accessToken);
+    this.getOrders();
     this.sseSubscription = this.sseService.getUpdates().subscribe(
       (data) => {
         if (data.type == 'clientAcceptOffer' || data.type == 'clientOffer') {
@@ -90,9 +92,10 @@ export class ActiveOrdersComponent implements OnInit {
         console.error(error);
       }
     );
-    this.getOrders();
   }
   getOrders(filter?: any, sortBy?: string, sortType?: string) {
+    console.log('ok');
+    
     const pagination = { size: this.size, currentPage: this.currentPage };
     this.isLoading = true;
 

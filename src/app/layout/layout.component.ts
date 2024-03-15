@@ -73,10 +73,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
           scheme: config.scheme,
           theme: config.theme,
         };
-
-        // If the scheme is set to 'auto'...
         if (config.scheme === 'auto') {
-          // Decide the scheme using the media query
           options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
         }
 
