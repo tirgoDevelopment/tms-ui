@@ -39,8 +39,9 @@ export class CreateDriverComponent implements OnInit {
     private driverService: DriversService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog )
+  {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,7 +57,6 @@ export class CreateDriverComponent implements OnInit {
   }
   submit() {
     this.form.disable();
-
     if (this.form.value.firstName === null) {
       this.form.enable();
       this.toastr.error('Требуется указать Имя');
@@ -99,7 +99,7 @@ export class CreateDriverComponent implements OnInit {
 
       this.driverService.createDriver(this.formData).subscribe((res: any) => {
         if (res.succes) {
-          console.log(res);
+          this.dialog.closeAll();
           this.form.enable();
           this.toastr.success('Водитель успешно добавлень');
           this.formData = new FormData;
@@ -115,7 +115,6 @@ export class CreateDriverComponent implements OnInit {
         this.toastr.error(error.error.message);
       })
     }
-
   }
   selectFile(event: any, name: string) {
     const file: File = event.target.files[0];
