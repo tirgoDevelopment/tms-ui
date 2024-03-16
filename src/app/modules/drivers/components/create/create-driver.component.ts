@@ -15,7 +15,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
-import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
@@ -69,14 +68,6 @@ export class CreateDriverComponent implements OnInit {
       this.form.enable();
       this.toastr.error('Требуется указать Номер телефона');
     }
-    else if (this.form.value.email === null) {
-      this.form.enable();
-      this.toastr.error('Требуется указать Электронная почта');
-    }
-    else if (this.form.value.citizenship === null) {
-      this.form.enable();
-      this.toastr.error('Требуется указать Гражданство');
-    }
     else if (this.form.value.password === null) {
       this.form.enable();
       this.toastr.error('Требуется указать пароль');
@@ -93,8 +84,6 @@ export class CreateDriverComponent implements OnInit {
       this.formData.append('firstName', this.form.value.firstName);
       this.formData.append('lastName', this.form.value.lastName);
       this.formData.append('phoneNumbers',JSON.stringify(this.form.value.phoneNumbers) );
-      this.formData.append('email', this.form.value.email);
-      this.formData.append('citizenship', this.form.value.citizenship);
       this.formData.append('password', this.form.value.password);
 
       this.driverService.createDriver(this.formData).subscribe((res: any) => {

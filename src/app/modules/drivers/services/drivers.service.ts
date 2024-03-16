@@ -10,7 +10,8 @@ export class DriversService {
   ) { }
 
   getActiveDrivers(id,pag,filter?, sortBy?, sortType?) {
-    return this.http.get(env.apiUsers + '/users/drivers/by-driver-merchant?id='+id);
+    return this.http.get(env.apiUsers + '/users/drivers/all-drivers');
+    // return this.http.get(env.apiUsers + '/users/drivers/by-driver-merchant?id='+id);
     // let url = `${env.apiUsers}/users/drivers/by-driver-merchant?id=${id}&pageSize=${pag.size}&pageIndex=${pag.currentPage}`;
     // if (filter) {
     //   url += `&${filter}`;
