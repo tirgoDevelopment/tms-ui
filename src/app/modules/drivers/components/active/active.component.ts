@@ -83,22 +83,44 @@ export class ActiveDriversComponent implements OnInit {
     this.currentUser = jwtDecode(this.authService.accessToken);
     this.getData();
   }
-
   getData(filter?: any, sortBy?: string, sortType?: string) {
+    const pagination = { size: this.size, currentPage: this.currentPage };
     this.isLoading = true;
-    this.driverService.getActiveDrivers(this.currentUser.merchantId).subscribe((res:any) => {
-      if(res && res.success) {
-        this.isLoading = false;
-        this.dataSource = res.data;
-      }
-      else {
+
+    const request$ = of({ filter, sortBy, sortType }).pipe(
+      switchMap(({ filter, sortBy, sortType }) => {
+        const requestParams = { filter, sortBy, sortType };
+        return this.driverService.getActiveDrivers(this.currentUser.merchantId,pagination, filter, sortBy, sortType).pipe(
+          map((res: any) => ({
+            success: res.success, data: res.data.content, totalPagesCount: res.data.totalPagesCount
+          })),
+          catchError(() => of({ success: false, data: [], totalPagesCount: 0 }))
+        );
+      })
+    );
+
+    request$.subscribe({
+      next: ({ success, data, totalPagesCount }) => {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500)
+        if (success) {
+          if (data.length > 0) {
+            this.dataSource = data;
+            this.totalPagesCount = totalPagesCount;
+          }
+          else if (!data) {
+            this.dataSource = [];
+          }
+        } else {
+          this.dataSource = [];
+        }
+      },
+      error: () => {
         this.isLoading = false;
         this.dataSource = [];
       }
-    },error => {
-      this.isLoading = false;
-      console.log(error);
-    })
+    });
   }
   create() {
     const dialogRef = this.dialog.open(AuthVerifyPhoneComponent, {

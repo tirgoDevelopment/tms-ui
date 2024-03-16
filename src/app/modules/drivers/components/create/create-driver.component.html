@@ -5,7 +5,7 @@
   </button>
 </div>
 
-<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll" #signInNgForm="ngForm">
+<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll">
 
   <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 overflow-y-scroll">
     <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
@@ -18,19 +18,9 @@
       <input matInput [formControlName]="'lastName'" />
     </mat-form-field>
 
-    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
-      <mat-label>Электронная почта</mat-label>
-      <input matInput [formControlName]="'email'" />
-    </mat-form-field>
-
     <mat-form-field class="w-full">
       <mat-label>Телефон</mat-label>
       <input matInput [formControlName]="'phoneNumbers'" [readonly]="this.form.value.phoneNumbers"  />
-    </mat-form-field>
-
-    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
-      <mat-label>Гражданство</mat-label>
-      <input matInput [formControlName]="'citizenship'" />
     </mat-form-field>
 
     <mat-form-field class="w-full">

@@ -15,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'app/core/auth/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, catchError, map, of, switchMap } from 'rxjs';
+import { Subscription, catchError, forkJoin, map, of, switchMap } from 'rxjs';
 import { PaginationComponent } from 'app/shared/components/pagination/pagination.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,13 +25,14 @@ import { OrdersService } from '../../services/orders.service';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { SseService } from 'app/shared/services/socket.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-active-orders',
   templateUrl: './active.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [PaginationComponent,MatTooltipModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+  imports: [PaginationComponent, MatTooltipModule,MatDatepickerModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
   animations: [
     trigger('showHideFilter', [
       state('show', style({
@@ -49,16 +50,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ]
 })
 export class ActiveOrdersComponent implements OnInit {
-  statuses: any;
+  transportTypes: any;
+  transportKinds: any;
   totalPagesCount: number = 1;
   size: number = 5;
   currentPage: number = 1;
   showFilter: boolean = false;
   isLoading: boolean = false;
   dataSource: any[];
-  displayedColumns: string[] = ['index', 'id', 'loadingLocation', 'deliveryLocation', 'sendDate', 'isSafe', 'transport_type', 'offeredPrice',];
+  displayedColumns: string[] = ['index', 'id', 'loadingLocation', 'deliveryLocation', 'sendDate', 'isSafeTransaction', 'transport_type', 'offeredPrice',];
   currentUser: any;
-  filter = { id: null, loadingLocation: null, deliveryLocation: null, sendDate: null, secure_transaction: null, transport_type: null, offeredPrice: null }
+  filter = { id: null, loadingLocation: null, deliveryLocation: null, createdAt:null,transportKindId:null,transportTypeId:null,sendDate: null, secure_transaction: null, transport_type: null, offeredPrice: null }
   private sseSubscription: Subscription;
   filterPath: string;
   sortColumn: string;
@@ -70,11 +72,12 @@ export class ActiveOrdersComponent implements OnInit {
     cargoStatus: { column: 'cargoStatus', direction: null },
     sendDate: { column: 'sendDate', direction: null },
     offeredPrice: { column: 'offeredPrice', direction: null },
-    isSafe: { column: 'isSafe', direction: null },
+    isSafeTransaction: { column: 'isSafeTransaction', direction: null },
   };
 
   constructor(
     private orderService: OrdersService,
+    private typesService: TypesService,
     private authService: AuthService,
     private dialog: MatDialog,
     private sseService: SseService
@@ -114,8 +117,17 @@ export class ActiveOrdersComponent implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
         }, 500)
-        this.dataSource = success ? data : [];
-        this.totalPagesCount = totalPagesCount;
+        if (success) {
+          if (data.length > 0) {
+            this.dataSource = data;
+            this.totalPagesCount = totalPagesCount;
+          }
+          else if (this.dataSource.length === 0) {
+            this.dataSource = [];
+          }
+        } else {
+          this.dataSource = [];
+        }
       },
       error: () => {
         this.isLoading = false;
@@ -123,12 +135,18 @@ export class ActiveOrdersComponent implements OnInit {
       }
     });
   }
-  getStatuses() {
-    // this.typesService.getStatuses().subscribe((res: any) => {
-    //   if (res.success) {
-    //     this.statuses = res.data;
-    //   }
-    // })
+  getTypes() {
+    forkJoin({
+      transportKinds: this.typesService.getTransportKinds(),
+      transportTypes: this.typesService.getTransportTypes()
+    }).subscribe((res: any) => {
+      if (res.transportKinds.success) {
+        this.transportKinds = res.transportKinds.data;
+      }
+      if (res.transportTypes.success) {
+        this.transportTypes = res.transportTypes.data;
+      }
+    });
   }
   showOrderDetails(order) {
     const dialogRef = this.dialog.open(OrderDetailComponent, {
@@ -158,7 +176,6 @@ export class ActiveOrdersComponent implements OnInit {
         url += `&${key}=${encodeURIComponent(filter[key])}`;
       }
     }
-    this.getOrders()
     return url.length > 0 ? url.substr(1) : url;
   }
   applyFilter() {
@@ -169,7 +186,7 @@ export class ActiveOrdersComponent implements OnInit {
   }
   resetSearch() {
     if (this.filter) {
-      this.filter = { id: null, loadingLocation: null, deliveryLocation: null, sendDate: null, secure_transaction: null, transport_type: null, offeredPrice: null };
+      this.filter = { id: null, loadingLocation: null, deliveryLocation: null, createdAt:null,transportKindId:null,transportTypeId:null,sendDate: null, secure_transaction: null, transport_type: null, offeredPrice: null }
       this.getOrders();
     }
   }

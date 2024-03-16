@@ -26,4 +26,7 @@ export class TypesService {
   getCargoLoadingMethod() {
     return this.http.get(env.apiReferences + '/references/cargo-loading-method/all');
   }
+  getStatuses() {
+    return this.http.get(env.apiReferences + '/references/cargo-statuses/all');
+  }
 }

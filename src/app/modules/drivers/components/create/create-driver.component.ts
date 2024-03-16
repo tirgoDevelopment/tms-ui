@@ -15,7 +15,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
-import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
@@ -39,8 +38,9 @@ export class CreateDriverComponent implements OnInit {
     private driverService: DriversService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog )
+  {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,7 +56,6 @@ export class CreateDriverComponent implements OnInit {
   }
   submit() {
     this.form.disable();
-
     if (this.form.value.firstName === null) {
       this.form.enable();
       this.toastr.error('Требуется указать Имя');
@@ -68,14 +67,6 @@ export class CreateDriverComponent implements OnInit {
     else if (this.form.value.phoneNumbers === null) {
       this.form.enable();
       this.toastr.error('Требуется указать Номер телефона');
-    }
-    else if (this.form.value.email === null) {
-      this.form.enable();
-      this.toastr.error('Требуется указать Электронная почта');
-    }
-    else if (this.form.value.citizenship === null) {
-      this.form.enable();
-      this.toastr.error('Требуется указать Гражданство');
     }
     else if (this.form.value.password === null) {
       this.form.enable();
@@ -93,13 +84,11 @@ export class CreateDriverComponent implements OnInit {
       this.formData.append('firstName', this.form.value.firstName);
       this.formData.append('lastName', this.form.value.lastName);
       this.formData.append('phoneNumbers',JSON.stringify(this.form.value.phoneNumbers) );
-      this.formData.append('email', this.form.value.email);
-      this.formData.append('citizenship', this.form.value.citizenship);
       this.formData.append('password', this.form.value.password);
 
       this.driverService.createDriver(this.formData).subscribe((res: any) => {
         if (res.succes) {
-          console.log(res);
+          this.dialog.closeAll();
           this.form.enable();
           this.toastr.success('Водитель успешно добавлень');
           this.formData = new FormData;
@@ -115,7 +104,6 @@ export class CreateDriverComponent implements OnInit {
         this.toastr.error(error.error.message);
       })
     }
-
   }
   selectFile(event: any, name: string) {
     const file: File = event.target.files[0];

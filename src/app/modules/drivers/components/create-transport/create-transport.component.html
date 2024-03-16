@@ -1,0 +1,17 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">Добавить транспорт</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll">
+
+  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 overflow-y-scroll">
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Имя</mat-label>
+      <input matInput [formControlName]="'firstName'" />
+    </mat-form-field>
+
+    </div>
+  </form>
