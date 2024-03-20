@@ -103,7 +103,6 @@ export class FuseLoadingService
     {
         if ( value < 0 || value > 100 )
         {
-            console.error('Progress value must be between 0 and 100!');
             return;
         }
 
@@ -121,7 +120,6 @@ export class FuseLoadingService
         // Return if the url was not provided
         if ( !url )
         {
-            console.error('The request URL must be provided!');
             return;
         }
 

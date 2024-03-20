@@ -28,25 +28,25 @@
           <div *ngIf="data.customsPlaceLocation">
             <p class="text-lg mb-1">Место затаможки</p>
             <p class="font-bold">
-              {{data.customsPlaceLocation}}</p>
+              {{data.customsPlaceLocation.name}}</p>
           </div>
 
           <div *ngIf="data.customsClearancePlaceLocation">
             <p class="text-lg mb-1">Место растаможки</p>
             <p class="font-bold">
-              {{data.customsClearancePlaceLocation}}</p>
+              {{data.customsClearancePlaceLocation.name}}</p>
           </div>
 
           <div *ngIf="data.additionalLoadingLocation">
             <p class="text-lg mb-1">Дополнительное место погрузки</p>
             <p class="font-bold">
-              {{data.additionalLoadingLocation}}</p>
+              {{data.additionalLoadingLocation.name}}</p>
           </div>
 
           <div *ngIf="data.additionalDeliveryLocation">
             <p class="text-lg mb-1">Дополнительное место выгрузки</p>
             <p class="font-bold">
-              {{data.additionalDeliveryLocation}}</p>
+              {{data.additionalDeliveryLocation.name}}</p>
           </div>
 
           <div>
@@ -184,12 +184,12 @@
           <div>
             <p class="text-lg mb-1">Способ погрузки</p>
             <p class="font-bold">
-              {{data.loadingMethod ? data.loadingMethod : 'Не указана'}}</p>
+              {{data.loadingMethod ? data.loadingMethod.name : 'Не указана'}}</p>
           </div>
           <div>
             <p class="text-lg mb-1">Упаковка</p>
             <p class="font-bold">
-              {{data.cargoPackage ? data.cargoPackage : 'Не указана'}}</p>
+              {{data.cargoPackage ? data.cargoPackage.name : 'Не указана'}}</p>
           </div>
         </div>
         <div class="my-8">

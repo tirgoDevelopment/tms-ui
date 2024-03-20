@@ -97,7 +97,6 @@ export class VerificationCodeForgotComponent implements OnInit {
       this.authService.verifyCode({ email: this.email, code: +code }).subscribe((res: any) => {
         if (res.success) {
           this.loading = false;
-          console.log(this.email);
           this.router.navigate(['auth/reset-password'], { queryParams: { email: this.email } });
           this.dialogRef.close();
         }

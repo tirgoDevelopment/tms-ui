@@ -165,7 +165,7 @@
         <td mat-cell *matCellDef="let row">
           {{
           row.offeredPrice
-          ? (row.offeredPriceCurrency !== null ? row.offeredPrice + ' ' + row.offeredPriceCurrency : row.offeredPrice)
+          ? (row.offeredPriceCurrency !== null ? row.offeredPrice + ' ' + row.offeredPriceCurrency.name : row.offeredPrice)
           : 'Не указана'
           }} </td>
       </ng-container>

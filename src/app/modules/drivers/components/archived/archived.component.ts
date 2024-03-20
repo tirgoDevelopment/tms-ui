@@ -18,7 +18,7 @@ import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { MatDialog } from "@angular/material/dialog";
-import { DetailComponent } from "../detail/detail.component";
+import { DetailComponent } from "../detail/detail-driver.component";
 import { jwtDecode } from "jwt-decode";
 import { DriversService } from "../../services/drivers.service";
 import { AuthService } from "app/core/auth/auth.service";

@@ -1,0 +1,62 @@
+<div class="flex justify-between items-center">
+  <p class="font-bold text-2xl">Информация о Водителе</p>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon aria-label="Close dialog">close</mat-icon>
+  </button>
+</div>
+
+<div class="max-w-md mx-auto h-full mt-3 ">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <p class="text-lg mb-1">Имя</p>
+      <p class="font-bold">{{data.firstName}}</p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Фамилия</p>
+      <p class="font-bold"> {{data.lastName}} </p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Номер телефона</p>
+      <p class="font-bold"> {{data.phoneNumbers[0].phoneNumber }} </p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Рейтинг</p>
+      <p class="font-bold">5.00 </p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Дата регистрации</p>
+      <p class="font-bold">{{data.createdAt | dateFormat:false}} </p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Подписка</p>
+      <p class="font-bold">{{ data.subscribedAt ? (data.subscribedAt | dateFormat:false) : 'Нет' }} </p>
+    </div>
+    <div>
+      <p class="text-lg mb-1">Статус</p>
+      <p class="font-bold"  [ngClass]="data.isBusy ? 'text-red-500' : 'text-green-500'">{{data.isBusy ? 'Занять' : 'Свободен'}} </p>
+    </div>
+  </div>
+
+  <div class="p-4 mt-4 border border-[#EFEFEF] rounded-md">
+    <div class="font-bold text-xl mb-2">Заказы</div>
+    <div class="flex justify-between gap-4">
+      <div><span class="text-lg mr-1">Всего:</span> 
+        <span class="font-bold">{{ data.isBusy ? (data.completedOrdersCount + data.canceledOrdersCount + 1) : (data.completedOrdersCount + data.canceledOrdersCount) }}</span>
+      </div>
+      <div><span class="text-lg mr-1">Завершенные:</span> <span class="font-bold">{{data.completedOrdersCount}} </span></div>
+      <div><span class="text-lg mr-1">Отмененные:</span> <span class="font-bold">{{data.canceledOrdersCount}}</span></div>
+    </div>
+  </div>
+  <div class="flex gap-4" >
+    <button class="fuse-mat-button-large dark w-full bg-[#FF7100FF] mt-10" mat-flat-button [color]="'primary'"
+      (click)="detailTransport()" *ngIf="data.driverTransports && data.driverTransports.length !== 0">
+      Посмотреть транспорты
+    </button>
+    <button class="fuse-mat-button-large  dark w-full mt-10" mat-flat-button [color]="'primary'"
+      (click)="addTransport()" *ngIf="!data.deleted">
+      <mat-icon>add</mat-icon>
+      Добавить транспорт
+    </button>
+  </div>
+
+</div>

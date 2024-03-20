@@ -23,7 +23,6 @@ export class SseService {
       };
   
       this.eventSource.onerror = (error) => {
-        console.error('Error with SSE connection:', error);
       };
       return this.receivedDataSubject.asObservable();
     } 

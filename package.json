@@ -26,6 +26,7 @@
         "angular8-yandex-maps": "^17.1.0",
         "apexcharts": "3.40.0",
         "crypto-js": "3.3.0",
+        "date-fns": "^3.6.0",
         "highlight.js": "11.8.0",
         "jwt-decode": "^4.0.0",
         "libphonenumber-js": "^1.10.54",

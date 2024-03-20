@@ -55,11 +55,11 @@
       <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="overflow-auto">  
+    <table mat-table [dataSource]="dataSource" class="overflow-auto">
       <ng-container matColumnDef="index">
         <th class="font-extrabold" mat-header-cell *matHeaderCellDef> No </th>
         <td mat-cell *matCellDef="let row; let i=index">
-          {{ i }}
+          {{ i+1 }}
         </td>
       </ng-container>
 
@@ -104,8 +104,8 @@
           Статус
         </th>
         <td mat-cell *matCellDef="let row">
-          <div class="status-badge relative">
-            {{row.status}}
+          <div class="status-badge relative" [ngClass]="row.isBusy ? 'bg-red-500' : 'bg-green-500'">
+            {{row.isBusy ? 'Занять' : 'Свободен'}}
           </div>
         </td>
       </ng-container>
@@ -129,7 +129,7 @@
           </div>
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.offers }}
+          {{ row.offers ? 'Да' : 'Нет' }}
         </td>
       </ng-container>
 
@@ -137,7 +137,7 @@
         <th mat-header-cell *matHeaderCellDef class="font-extrabold">
           Геопозиция
         </th>
-        <td mat-cell *matCellDef="let row">{{row.location}}</td>
+        <td mat-cell *matCellDef="let row"> {{row.location ? 'Есть разр.' : 'Нет разр.'}}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">
