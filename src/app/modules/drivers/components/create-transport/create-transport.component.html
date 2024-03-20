@@ -5,13 +5,121 @@
   </button>
 </div>
 
-<form [formGroup]="form" class="mt-8 w-full overflow-y-scroll">
+<form [formGroup]="form" class="mt-10 w-full">
 
-  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 overflow-y-scroll">
+  <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+
     <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
-      <mat-label>Имя</mat-label>
-      <input matInput [formControlName]="'firstName'" />
+      <mat-label>Марка Транспорта</mat-label>
+      <input matInput [formControlName]="'name'" />
     </mat-form-field>
 
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Гос. номер</mat-label>
+      <input matInput [formControlName]="'stateNumber'" />
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Тип транспорта</mat-label>
+      <mat-select [formControlName]="'transportTypeIds'" multiple="true">
+        <mat-option [value]="item.id" *ngFor="let item of transportTypes">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Вид транспорта</mat-label>
+      <mat-select [formControlName]="'transportKindIds'" multiple="true">
+        <mat-option [value]="item.id" *ngFor="let item of transportKinds">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Вид погрузки</mat-label>
+      <mat-select [formControlName]="'loadingMethodIds'" multiple="true">
+        <mat-option [value]="item.id" *ngFor="let item of loadingMethod">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Грузоподъемность (т.)</mat-label>
+      <mat-select [formControlName]="'loadCapacity'">
+        <mat-option *ngFor="let option of loadCapacityOptions" [value]="option">{{ option }} <span matSuffix>тонна</span></mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+
+    <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
+      <mat-label>Объем</mat-label>
+      <input matInput [formControlName]="'cubicCapacity'"  />
+      <span matSuffix>m<sup>3</sup> </span>
+    </mat-form-field>
+
+    <div class="flex items-center">
+      <mat-checkbox [formControlName]="'isAdr'">АДР</mat-checkbox>
     </div>
-  </form>
+
+  </div>
+
+  <div class="flex gap-4 mt-5">
+    <div class="w-32">
+      <mat-label class="font-bold">Тех. паспорт (спереди)</mat-label>
+      <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+          <div>
+            <input formControlName="techPassportFrontFilePath" id="front"
+              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'techPassportFrontFilePath')">
+            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+              for="front" matRipple>
+              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+            </label>
+          </div>
+        </div>
+        <img class="object-fill w-full h-full" *ngIf="techPassportFrontFilePath" [src]="techPassportFrontFilePath">
+      </div>
+    </div>
+
+    <div class="w-32">
+      <mat-label class="font-bold">Тех. паспорт (сзади)</mat-label>
+      <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+          <div>
+            <input formControlName="techPassportBackFilePath" id="back"
+              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'techPassportBackFilePath')">
+            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+              for="back" matRipple>
+              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+            </label>
+          </div>
+        </div>
+        <img class="object-fill w-full h-full" *ngIf="techPassportBackFilePath" [src]="techPassportBackFilePath">
+      </div>
+    </div>
+
+    <div class="w-32">
+      <mat-label class="font-bold">Лицензия на грузоперевозку</mat-label>
+      <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-md"></div>
+        <div class="absolute inset-0 flex items-center justify-center z-20">
+          <div>
+            <input formControlName="goodsTransportationLicenseCardFilePath" id="back"
+              class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
+              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'goodsTransportationLicenseCardFilePath')">
+            <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
+              for="back" matRipple>
+              <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+            </label>
+          </div>
+        </div>
+        <img class="object-fill w-full h-full" *ngIf="goodsTransportationLicenseCardFilePath" [src]="goodsTransportationLicenseCardFilePath">
+      </div>
+    </div>
+  </div>
+
+  <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'" (click)="addTransport()">
+    Сохранить
+  </button>
+</form>

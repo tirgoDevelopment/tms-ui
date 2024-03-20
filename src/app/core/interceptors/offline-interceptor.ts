@@ -15,7 +15,6 @@ export class OfflineInterceptor implements HttpInterceptor {
     // Check if the device is offline
     if (!navigator.onLine) {
       // Handle offline mode (e.g., store requests for later)
-      console.error('Device is offline. Request not sent:', request.url);
       return throwError(new HttpErrorResponse({ status: 0, statusText: 'Offline' }));
     }
 

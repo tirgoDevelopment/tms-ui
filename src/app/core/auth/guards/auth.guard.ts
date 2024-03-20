@@ -19,7 +19,6 @@ export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
                 return of(false)
             }
             else if(!user.completed && state.url !== '/register/step3' && state.url !== '/register/step2'&& state.url !== '/auth/sign-in') {
-                console.log(state.url);
                 return of(false)
             }
             return of(true);

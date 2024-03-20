@@ -92,7 +92,6 @@ export class ActiveOrdersComponent implements OnInit {
         }
       },
       (error) => {
-        console.error(error);
       }
     );
   }
@@ -105,7 +104,7 @@ export class ActiveOrdersComponent implements OnInit {
         const requestParams = { filter, sortBy, sortType };
         return this.orderService.getActiveOrders(this.currentUser.merchantId, pagination, filter, sortBy, sortType).pipe(
           map((res: any) => ({
-            success: res.success, data: res.data, totalPagesCount: res.totalPagesCount
+            success: res.success, data: res.data.content, totalPagesCount: res.data.totalPagesCount
           })),
           catchError(() => of({ success: false, data: [], totalPagesCount: 0 }))
         );

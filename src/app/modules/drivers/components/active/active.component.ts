@@ -17,7 +17,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatDialog } from "@angular/material/dialog";
-import { DetailComponent } from "../detail/detail.component";
+import { DetailComponent } from "../detail/detail-driver.component";
 import { ConfirmModalComponent } from "app/shared/components/confirm-modal/confirm.component";
 import { DriverEditComponent } from "../edit/edit.component";
 import { catchError, map, of, switchMap } from "rxjs";
@@ -32,7 +32,7 @@ import { PipesModule } from "app/shared/pipes/pipes.module";
   templateUrl: './active.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [PaginationComponent,PipesModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+  imports: [PaginationComponent, PipesModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
   animations: [
     trigger('showHideFilter', [
       state('show', style({
@@ -52,7 +52,7 @@ import { PipesModule } from "app/shared/pipes/pipes.module";
 export class ActiveDriversComponent implements OnInit {
 
   showFilter: boolean = false;
-  filter = { driverId: null,name:null,phoneNumber:null,transportKind:null,subscribe:null,status:null }
+  filter = { driverId: null, name: null, phoneNumber: null, transportKind: null, subscribe: null, status: null }
   totalPagesCount: number = 1;
   size: number = 5;
   currentPage: number = 1;
@@ -90,7 +90,7 @@ export class ActiveDriversComponent implements OnInit {
     const request$ = of({ filter, sortBy, sortType }).pipe(
       switchMap(({ filter, sortBy, sortType }) => {
         const requestParams = { filter, sortBy, sortType };
-        return this.driverService.getActiveDrivers(this.currentUser.merchantId,pagination, filter, sortBy, sortType).pipe(
+        return this.driverService.getActiveDrivers(this.currentUser.merchantId, pagination, filter, sortBy, sortType).pipe(
           map((res: any) => ({
             success: res.success, data: res.data.content, totalPagesCount: res.data.totalPagesCount
           })),
@@ -127,6 +127,9 @@ export class ActiveDriversComponent implements OnInit {
       autoFocus: false,
       disableClose: true,
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getData();
+    });
   }
   showDetails(row) {
     const dialogRef = this.dialog.open(DetailComponent, {
@@ -138,9 +141,6 @@ export class ActiveDriversComponent implements OnInit {
         top: '0',
         right: '0',
       },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // this.getOrders();
     });
   }
   showEdit(row) {
@@ -192,7 +192,7 @@ export class ActiveDriversComponent implements OnInit {
   }
   resetSearch() {
     if (this.filter) {
-      this.filter = { driverId: null,name:null,phoneNumber:null,transportKind:null,subscribe:null,status:null }
+      this.filter = { driverId: null, name: null, phoneNumber: null, transportKind: null, subscribe: null, status: null }
       this.getData();
     }
   }
