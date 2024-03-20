@@ -49,6 +49,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     ]
   },
   {
+    id: 'finance',
+    title: 'Финансы',
+    type: 'basic',
+    icon: 'finance.svg',
+    link: '/finance',
+  },
+  {
     id: 'settings',
     title: 'Настройки',
     type: 'basic',
