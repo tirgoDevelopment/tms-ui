@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
+import { NgClass, NgFor, NgIf } from "@angular/common";
 import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -15,7 +15,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
 import { NgApexchartsModule } from "ng-apexcharts";
-import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { MatCardModule } from "@angular/material/card";
@@ -48,12 +47,22 @@ export class DetailComponent implements OnInit {
     this.getDriver();
   }
   getDriver() {
-    let data = { id: this.driver.id, userId: this.currentUser.userId}
-    this.driversService.getDriverById(data).subscribe((res:any) => {
-      if(res && res.success) {
-        this.data = res.data;
-      }
-    })
+    let data = { driver: this.driver, userId: this.currentUser.userId}
+    if(!this.driver.deleted) {
+      this.driversService.getActiveDriverById(data).subscribe((res:any) => {
+        if(res && res.success) {
+          this.data = res.data;
+        }
+      })
+    }
+    else {
+      this.driversService.getArchiveDriverById(data).subscribe((res:any) => {
+        if(res && res.success) {
+          this.data = res.data.driver;
+        }
+      })
+    }
+    
   }
   addTransport() {
     this.dialogRef.close();

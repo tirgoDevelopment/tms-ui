@@ -56,29 +56,30 @@ export class CreateDriverComponent implements OnInit {
       passport: [null, Validators.required],
     })
   }
+
   submit() {
     this.form.disable();
-    if (this.form.value.firstName === null) {
+    if (this.form.value.firstName === null || this.form.value.firstName === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Имя');
     }
-    else if (this.form.value.lastName === null) {
+    else if (this.form.value.lastName === null || this.form.value.lastName === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Фамилия');
     }
-    else if (this.form.value.phoneNumbers === null) {
+    else if (this.form.value.phoneNumbers === null || this.form.value.phoneNumbers === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Номер телефона');
     }
-    else if (this.form.value.password === null) {
+    else if (this.form.value.password === null || this.form.value.password === '') {
       this.form.enable();
       this.toastr.error('Требуется указать пароль');
     }
-    else if (this.form.value.driverLicense === null) {
+    else if (this.form.value.driverLicense === null || this.form.value.driverLicense === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Водительские права');
     }
-    else if (this.form.value.passport === null) {
+    else if (this.form.value.passport === null || this.form.value.passport === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Паспорт');
     }
@@ -94,15 +95,12 @@ export class CreateDriverComponent implements OnInit {
           this.addTransport(res.data);
           this.form.enable();
           this.toastr.success('Водитель успешно добавлень');
-          this.formData = new FormData;
         }
       }, error => {
         if (error.error.message == 'duplicateError') {
-          this.formData = new FormData;
           this.form.enable();
           this.toastr.error('Пользователь имеет в системе');
         } else {
-          this.formData = new FormData;
           this.form.enable();
           this.toastr.error(error.error.message);
         }

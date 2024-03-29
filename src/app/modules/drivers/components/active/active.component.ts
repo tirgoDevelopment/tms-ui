@@ -59,7 +59,7 @@ export class ActiveDriversComponent implements OnInit {
 
   isLoading: boolean = false;
   dataSource: any[];
-  displayedColumns: string[] = ['index', 'id', 'full_name', 'transport_kind', 'status', 'subscribe', 'offers', 'location', 'action'];
+  displayedColumns: string[] = ['index', 'id', 'full_name', 'phone', 'transport_kind', 'status', 'subscribe', 'offers', 'location', 'action'];
   currentUser: any;
 
   filterPath: string;

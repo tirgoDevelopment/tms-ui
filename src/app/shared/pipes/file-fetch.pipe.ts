@@ -9,6 +9,16 @@ export class FileFetchPipe implements PipeTransform {
   constructor(private driverService: DriversService) { }
 
   transform(fileName: string): Observable<string> {
-    return this.driverService.getFile(fileName)
+    return new Observable<string>((observer) => {
+      this.driverService.getFile(fileName).subscribe(
+        (url: string) => {
+          observer.next(url);
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
+    });
   }
 }

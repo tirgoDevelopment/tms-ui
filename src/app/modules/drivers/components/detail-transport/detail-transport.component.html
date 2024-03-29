@@ -37,7 +37,7 @@
 
       <div>
         <p class="text-lg mb-1">Грузоподъемность </p>
-        <p class="font-bold">{{item.loadCapacity  ? item.loadCapacity +' (т.)' : 'Не указан'}} </p>
+        <p class="font-bold">{{item.loadCapacity  ? item.loadCapacity +' (тонна)' : 'Не указан'}} </p>
       </div>
 
       <div>
@@ -47,19 +47,46 @@
 
       
     </div>
-    <div class="flex gap-4 mt-5 w-full">
-      <mat-card class="w-auto" *ngIf="item.techPassportFrontFilePath">
+    <div class="grid grid-cols-2 gap-3 mt-5 w-full">
+      <div class="w-auto" *ngIf="item.techPassportFrontFilePath">
         <mat-label class="font-bold p-2">Тех. паспорт (спереди)</mat-label>
         <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden p-2">
-          <img class="object-fill w-full h-full" *ngIf="item.techPassportFrontFilePath" [src]="item.techPassportFrontFilePath | fileFetch | async">
+          <ng-container *ngIf="(item.techPassportFrontFilePath | fileFetch | async) as imageUrl; else loading">
+            <img class="object-fill w-full h-full" [src]="imageUrl" (load)="isLoading = false" />
+          </ng-container>
+          <ng-template #loading>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <mat-spinner diameter="32"></mat-spinner>
+            </div>
+          </ng-template>
         </div>
-      </mat-card>
-      <mat-card class="w-auto">
+      </div>
+      <div class="w-auto">
         <mat-label class="font-bold p-2">Тех. паспорт (сзади)</mat-label>
         <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden p-2">
-          <img class="object-fill w-full h-full" *ngIf="item.techPassportBackFilePath" [src]="item.techPassportBackFilePath | fileFetch | async">
+          <ng-container *ngIf="(item.techPassportBackFilePath | fileFetch | async) as imageUrl; else loading">
+            <img class="object-fill w-full h-full" [src]="imageUrl" (load)="isLoading = false" />
+          </ng-container>
+          <ng-template #loading>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <mat-spinner diameter="32"></mat-spinner>
+            </div>
+          </ng-template>
         </div>
-      </mat-card>
+      </div>
+      <div class="w-auto">
+        <mat-label class="font-bold p-2">Лицензия на грузоперевозку</mat-label>
+        <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden p-2">
+          <ng-container *ngIf="(item.goodsTransportationLicenseCardFilePath | fileFetch | async) as imageUrl; else loading">
+            <img class="object-fill w-full h-full" [src]="imageUrl" (load)="isLoading = false" />
+          </ng-container>
+          <ng-template #loading>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <mat-spinner diameter="32"></mat-spinner>
+            </div>
+          </ng-template>
+        </div>
+      </div>
     </div>
     
   </mat-tab>
