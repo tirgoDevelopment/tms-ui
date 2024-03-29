@@ -149,7 +149,7 @@ export class FinanceComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateTransactionComponent, {
       autoFocus: false,
       disableClose: true,
-      data: { type }
+      data: { type:type, balance: this.balances }
     });
     dialogRef.afterClosed().subscribe(result => {
       this.getAllTransaction();

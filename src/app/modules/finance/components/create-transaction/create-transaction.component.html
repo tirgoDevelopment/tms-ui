@@ -6,11 +6,21 @@
 </div>
 
 <div class="font-bold text-3xl flex justify-center">
-  {{transactionType == 'topupAccount' ? 'Пополнить баланс' : 'Вывод средств'}} 
+  {{transactionType == 'topupAccount' ? 'Пополнить баланс' : 'Вывод средств'}}
 </div>
 
 <mat-dialog-content class="mat-typography m-auto">
   <form [formGroup]="form" class="mt-8 w-full">
+    <div>
+      <mat-form-field class="flex-auto md:w-72 sm:w-full" *ngIf="transactionType == 'withdrawAccount'">
+        <mat-label>Выберите баланс</mat-label>
+        <mat-select formControlName="transactionType">
+          <mat-option value="withdrawSecureAccount">Баланс безопасной транзакции</mat-option>
+          <mat-option value="withdrawAccount">Баланс транзакции</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div>
       <mat-form-field class="flex-auto md:w-72 sm:w-full">
         <mat-label>Сумма</mat-label>
@@ -29,12 +39,10 @@
     </div>
 
   </form>
-</mat-dialog-content>
 
-<mat-dialog-actions align="center">
   <button (click)="create()" [disabled]="loading" class="fuse-mat-button-large dark w-full" mat-flat-button
     [color]="'primary'">
     <span *ngIf="!loading">Отправить запрос</span>
     <mat-progress-spinner *ngIf="loading" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
   </button>
-</mat-dialog-actions>
+</mat-dialog-content>

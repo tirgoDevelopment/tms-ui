@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -50,36 +50,47 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = jwtDecode(localStorage.getItem('tmc'));
     this.transactionType = this.data.type;
+    
     this.form = this.formBuilder.group({
-      amount: [''],
-      comment: [''],
-      currencyId: [''],
-      transactionType: [''],
-      merchantId: [''],
+      amount: [null, Validators.required],
+      comment: [null],
+      currencyId: [null],
+      transactionType: [null, Validators.required],
+      merchantId: [null],
     })
     this.typesService.getCurrencies().subscribe((res:any) => {
       this.currencies = res.data;
       this.form.patchValue({
-        transactionType: this.transactionType,
+        transactionType: this.form.value.transactionType,
         currencyId: this.currencies[0].id,
         merchantId: this.currentUser.merchantId
       })
     })
     
   }
-
   create() {
     this.form.disable();
-    this.financeService.create(this.form.value).subscribe((res: any) => {
-      if (res && res.success) {
-        this.form.enable();
-        this.toastr.success('Запрос отправлен');
-        this.closeModal();
-      }
-    }, err => {
+    
+    if(this.form.value.amount == null || this.form.value.amount == '') {
       this.form.enable();
-      this.toastr.error(err.error.message);
-    })
+      this.toastr.error('Введите сумму');
+    }
+    else if(this.form.value.transactionType == null || this.form.value.transactionType == '') {
+      this.form.enable();
+      this.toastr.error('Введите тип баланс');
+    }
+    else {
+      this.financeService.create(this.form.value).subscribe((res: any) => {
+        if (res && res.success) {
+          this.form.enable();
+          this.toastr.success('Запрос отправлен');
+          this.closeModal();
+        }
+      }, err => {
+        this.form.enable();
+        this.toastr.error(err.error.message);
+      })
+    }
   }
 
   closeModal() {

@@ -85,25 +85,44 @@ export class CreateTransportComponent implements OnInit {
   }
   addTransport() {
     this.form.disable();
-    this.formData.append('driverId', this.form.value.driverId)
-    this.formData.append('name', this.form.value.name)
-    this.formData.append('stateNumber', this.form.value.stateNumber)
-    this.formData.append('cubicCapacity', this.form.value.cubicCapacity)
-    this.formData.append('transportKindIds', JSON.stringify(this.form.value.transportKindIds))
-    this.formData.append('transportTypeIds', JSON.stringify(this.form.value.transportTypeIds))
-    this.formData.append('loadingMethodIds', JSON.stringify(this.form.value.loadingMethodIds))
-    this.formData.append('isAdr', this.form.value.isAdr)
-    this.formData.append('loadCapacity', this.form.value.loadCapacity)
-    this.driverService.createTransport(this.formData).subscribe((res:any) => {
-      if(res && res.success) {
-        this.form.enable();
-        this.dialog.closeAll();
-        this.toastr.success('Успешно добавлена')
-      }
-    },err => {
+    if(this.form.value.name == null || this.form.value.name == '') {
       this.form.enable();
-      this.toastr.error(err.error.message)
-    })
+      this.toastr.error('Введите Марка Транспорта')
+    }
+    else if(this.form.value.techPassportFrontFilePath == null || this.form.value.techPassportFrontFilePath == '') {
+      this.form.enable();
+      this.toastr.error('Введите Тех. паспорт (спереди)')
+    }
+    else if(this.form.value.techPassportBackFilePath == null || this.form.value.techPassportBackFilePath == '') {
+      this.form.enable();
+      this.toastr.error('Введите Тех. паспорт (сзади)')
+    }
+    else if(this.form.value.techPassportFrontFilePath == null || this.form.value.techPassportFrontFilePath == '') {
+      this.form.enable();
+      this.toastr.error('Введите Лицензия на грузоперевозку')
+    }
+    else {
+      this.formData.append('driverId', this.form.value.driverId)
+      this.formData.append('name', this.form.value.name)
+      this.formData.append('stateNumber', this.form.value.stateNumber)
+      this.formData.append('cubicCapacity', this.form.value.cubicCapacity)
+      this.formData.append('transportKindIds', JSON.stringify(this.form.value.transportKindIds))
+      this.formData.append('transportTypeIds', JSON.stringify(this.form.value.transportTypeIds))
+      this.formData.append('loadingMethodIds', JSON.stringify(this.form.value.loadingMethodIds))
+      this.formData.append('isAdr', this.form.value.isAdr)
+      this.formData.append('loadCapacity', this.form.value.loadCapacity)
+      this.driverService.createTransport(this.formData).subscribe((res:any) => {
+        if(res && res.success) {
+          this.form.enable();
+          this.dialog.closeAll();
+          this.toastr.success('Успешно добавлена')
+        }
+      },err => {
+        this.form.enable();
+        this.toastr.error(err.error.message)
+      })
+    }
+    
   }
   selectFile(event: any, name: string) {
     const file: File = event.target.files[0];

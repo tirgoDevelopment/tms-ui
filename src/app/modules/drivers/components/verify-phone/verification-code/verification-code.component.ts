@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from 'app/core/auth/auth.service';
 import { CreateDriverComponent } from 'app/modules/drivers/components/create/create-driver.component';
+import { DriversService } from 'app/modules/drivers/services/drivers.service';
 
 @Component({
   selector: 'driver-verification-code',
@@ -40,7 +41,8 @@ export class VerificationCodeComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<VerificationCodeComponent>,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private driverService: DriversService
   ) {
   }
 
@@ -60,11 +62,20 @@ export class VerificationCodeComponent implements OnInit {
       this.toastr.error('Пароль не совпадает');
     }
     else if (this.smsCode == this.verifyCode && this.authService.accessToken) {
-      const dialogRef = this.dialog.open(CreateDriverComponent, {
-        autoFocus: false,
-        disableClose: true,
-        data: this.data
-      });
+      console.log(this.data.phone);
+      
+      this.driverService.getDriverByPhone(this.data.phone.replace(/\+/g, '')).subscribe((res:any) => {
+        if(res && res.success && res.data.driverMerchant) {
+          this.toastr.error('Driver have tmc');
+        }
+        else {
+          const dialogRef = this.dialog.open(CreateDriverComponent, {
+            autoFocus: false,
+            disableClose: true,
+            data: this.data
+          });
+        }
+      })
       this.dialogRef.close();
     }
     

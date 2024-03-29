@@ -30,8 +30,14 @@ export class DriversService {
     }
     return this.http.get(url);
   }
-  getDriverById(data) {
-    return this.http.get(env.apiUsers +'/users/drivers/driver-by?id='+data.id+'&userId='+data.userId)
+  getDriverByPhone(data) {
+    return this.http.get(env.apiUsers +'/users/drivers/driver-by-phone?phone='+ data);
+  }
+  getActiveDriverById(data) {
+    return this.http.get(env.apiUsers +'/users/drivers/driver-by?id='+data.driver.id+'&userId='+data.userId);
+  }
+  getArchiveDriverById(data) {
+    return this.http.get(env.apiUsers +'/users/archive/get-by?userId='+data.driver.user.id);
   }
   createDriver(data) {
     return this.http.post(env.apiUsers + '/users/drivers/register',data);
