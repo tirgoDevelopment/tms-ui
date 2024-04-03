@@ -25,7 +25,7 @@
 
     <mat-form-field class="w-full">
       <mat-label>Пароль</mat-label>
-      <input matInput type="password" [formControlName]="'password'" #passwordField>
+      <input matInput type="password" [formControlName]="'password'" #passwordField >
       <button mat-icon-button type="button"
         (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
         matSuffix>

@@ -20,6 +20,7 @@ import { ToastrService } from "ngx-toastr";
 import { NgxMatIntlTelInputComponent } from "ngx-mat-intl-tel-input";
 import { DriversService } from "../../services/drivers.service";
 import { ConfirmAddTransportComponent } from "../confirmAddTransport/confirm-add-transport.component";
+import { NgxMaskDirective } from "ngx-mask";
 
 @Component({
   selector: 'app-create-driver',
@@ -27,7 +28,7 @@ import { ConfirmAddTransportComponent } from "../confirmAddTransport/confirm-add
   styleUrls: ['./create-driver.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [PaginationComponent, NgxMatIntlTelInputComponent, MatDialogModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
+  imports: [PaginationComponent, NgxMaskDirective,NgxMatIntlTelInputComponent, MatDialogModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
 })
 export class CreateDriverComponent implements OnInit {
   formData = new FormData()
@@ -45,6 +46,8 @@ export class CreateDriverComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    
     this.form = this.formBuilder.group({
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
@@ -62,33 +65,43 @@ export class CreateDriverComponent implements OnInit {
     if (this.form.value.firstName === null || this.form.value.firstName === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Имя');
+      return;
     }
     else if (this.form.value.lastName === null || this.form.value.lastName === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Фамилия');
+      return;
     }
     else if (this.form.value.phoneNumbers === null || this.form.value.phoneNumbers === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Номер телефона');
+      return;
     }
     else if (this.form.value.password === null || this.form.value.password === '') {
       this.form.enable();
       this.toastr.error('Требуется указать пароль');
+      return;
     }
     else if (this.form.value.driverLicense === null || this.form.value.driverLicense === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Водительские права');
+      return;
     }
     else if (this.form.value.passport === null || this.form.value.passport === '') {
       this.form.enable();
       this.toastr.error('Требуется указать Паспорт');
+      return;
     }
     else {
+      this.formData.delete('firstName');
+      this.formData.delete('lastName');
+      this.formData.delete('phoneNumbers');
+      this.formData.delete('password');
+
       this.formData.append('firstName', this.form.value.firstName);
       this.formData.append('lastName', this.form.value.lastName);
       this.formData.append('phoneNumbers', JSON.stringify(this.form.value.phoneNumbers));
       this.formData.append('password', this.form.value.password);
-
       this.driverService.createDriver(this.formData).subscribe((res: any) => {
         if (res && res.success) {
           this.dialog.closeAll();
@@ -100,7 +113,16 @@ export class CreateDriverComponent implements OnInit {
         if (error.error.message == 'duplicateError') {
           this.form.enable();
           this.toastr.error('Пользователь имеет в системе');
-        } else {
+        }
+        if (error.error.message == 'password must be longer than or equal to 8 characters') {
+          this.form.enable();
+          this.toastr.error('Длина пароля должна превышать 8 символов');
+        }
+        if (error.error.message == 'passwordShouldContainerNumStr') {
+          this.form.enable();
+          this.toastr.error('Буквы и цифры должны присутствовать');
+        }
+        else {
           this.form.enable();
           this.toastr.error(error.error.message);
         }

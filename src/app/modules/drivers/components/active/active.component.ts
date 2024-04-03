@@ -26,6 +26,7 @@ import { jwtDecode } from "jwt-decode";
 import { AuthService } from "app/core/auth/auth.service";
 import { AuthVerifyPhoneComponent } from "../verify-phone/verify-phone.component";
 import { PipesModule } from "app/shared/pipes/pipes.module";
+import { AddSubscribeComponent } from "../add-subscribe/add-subscribe.component";
 
 @Component({
   selector: 'app-active-drivers',
@@ -156,6 +157,12 @@ export class ActiveDriversComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       // this.getOrders();
+    });
+  }
+  addSubscribe() {
+    const dialogRef = this.dialog.open(AddSubscribeComponent, {
+      autoFocus: false,
+      disableClose: true,
     });
   }
   confirmModal(): void {
