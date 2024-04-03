@@ -132,6 +132,17 @@ export class Step2Component implements OnInit {
       this.toastr.error('Требуется указать Юридический адрес');
     }
     else {
+      this.formData.delete('merchantId')
+      this.formData.delete('supervisorFirstName')
+      this.formData.delete('supervisorLastName')
+      this.formData.delete('responsiblePersonFistName')
+      this.formData.delete('responsiblePersonLastName')
+      this.formData.delete('responsbilePersonPhoneNumber')
+      this.formData.delete('factAddress')
+      this.formData.delete('legalAddress')
+      this.formData.delete('garageAddress')
+      this.formData.delete('postalCode')
+
       this.formData.append('merchantId', this.currentUser.merchantId)
       this.formData.append('supervisorFirstName', this.signUpForm.value.supervisorFirstName)
       this.formData.append('supervisorLastName', this.signUpForm.value.supervisorLastName)

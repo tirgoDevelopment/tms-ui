@@ -50,7 +50,6 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = jwtDecode(localStorage.getItem('tmc'));
     this.transactionType = this.data.type;
-    
     this.form = this.formBuilder.group({
       amount: [null, Validators.required],
       comment: [null],
@@ -60,11 +59,20 @@ export class CreateTransactionComponent implements OnInit {
     })
     this.typesService.getCurrencies().subscribe((res:any) => {
       this.currencies = res.data;
-      this.form.patchValue({
-        transactionType: this.form.value.transactionType,
-        currencyId: this.currencies[0].id,
-        merchantId: this.currentUser.merchantId
-      })
+      if(this.data.type == 'withdrawAccount') {
+        this.form.patchValue({
+          transactionType: this.form.value.transactionType,
+          currencyId: this.currencies[0].id,
+          merchantId: this.currentUser.merchantId
+        })
+      }
+      if(this.data.type !== 'withdrawAccount') {
+        this.form.patchValue({
+          transactionType: this.data.type,
+          currencyId: this.currencies[0].id,
+          merchantId: this.currentUser.merchantId
+        })
+      }
     })
     
   }
@@ -75,7 +83,7 @@ export class CreateTransactionComponent implements OnInit {
       this.form.enable();
       this.toastr.error('Введите сумму');
     }
-    else if(this.form.value.transactionType == null || this.form.value.transactionType == '') {
+    else if(this.data.type == 'withdrawAccount' && (this.form.value.transactionType == null || this.form.value.transactionType == '')) {
       this.form.enable();
       this.toastr.error('Введите тип баланс');
     }
@@ -92,7 +100,6 @@ export class CreateTransactionComponent implements OnInit {
       })
     }
   }
-
   closeModal() {
     this.dialogRef.close();
   }

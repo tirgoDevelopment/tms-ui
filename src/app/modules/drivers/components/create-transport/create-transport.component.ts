@@ -102,6 +102,16 @@ export class CreateTransportComponent implements OnInit {
       this.toastr.error('Введите Лицензия на грузоперевозку')
     }
     else {
+      this.formData.delete('driverId')
+      this.formData.delete('name')
+      this.formData.delete('stateNumber')
+      this.formData.delete('cubicCapacity')
+      this.formData.delete('transportKindIds')
+      this.formData.delete('transportTypeIds')
+      this.formData.delete('loadingMethodIds')
+      this.formData.delete('isAdr')
+      this.formData.delete('loadCapacity')
+
       this.formData.append('driverId', this.form.value.driverId)
       this.formData.append('name', this.form.value.name)
       this.formData.append('stateNumber', this.form.value.stateNumber)

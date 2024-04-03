@@ -2,6 +2,9 @@
   <div class="flex justify-between items-center my-5">
     <div class="text-3xl font-bold">Активный перевозчики</div>
     <div class="flex justify-end gap-2">
+      <button class="fuse-mat-button-large dark dark:bg-[#1E293BDB]" mat-flat-button [color]="'primary'" (click)="addSubscribe()">
+        Оформить подписку
+      </button>
       <button class="fuse-mat-button-large dark dark:bg-[#1E293BDB]" mat-flat-button [color]="'primary'"
         (click)="showFilter = !showFilter">
         <mat-icon>search</mat-icon>
@@ -95,7 +98,7 @@
           Телефон
         </th>
         <td mat-cell *matCellDef="let row">
-          {{row.phoneNumbers[0].phoneNumber}}
+          +{{row.phoneNumbers[0].phoneNumber}}
         </td>
       </ng-container>
 

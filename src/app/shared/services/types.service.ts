@@ -29,4 +29,7 @@ export class TypesService {
   getStatuses() {
     return this.http.get(env.apiReferences + '/references/cargo-statuses/all');
   }
+  getSubscriptions() {
+    return this.http.get(env.apiReferences + '/references/subscriptions/all');
+  }
 }
