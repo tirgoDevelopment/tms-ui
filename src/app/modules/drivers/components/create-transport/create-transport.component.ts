@@ -39,6 +39,13 @@ export class CreateTransportComponent implements OnInit {
   transportKinds:any;
   loadingMethod:any;
 
+  isAutotransport: boolean = false;
+  isRefrigerator: boolean = false;
+  isRefrigeratorMode: boolean = false;
+  isCistern: boolean = false;
+  isContainer: boolean = false;
+
+
   techPassportFrontFilePath:string;
   techPassportBackFilePath:string;
   goodsTransportationLicenseCardFilePath:string;
@@ -80,8 +87,24 @@ export class CreateTransportComponent implements OnInit {
       isAdr: [false],
       techPassportFrontFilePath: [null],
       techPassportBackFilePath: [null],
-      goodsTransportationLicenseCardFilePath:[null]
+      goodsTransportationLicenseCardFilePath:[null],
+
+      refrigeratorCount:[null],
+      isHook:[null],
+      refrigeratorFrom:[null],
+      refrigeratorTo:[null],
+      cisternVolume:[null],
+      containerVolume:[null],
+      isHighCube:[null],
     })
+
+    this.form.get('transportKindIds').valueChanges.subscribe((values) => {
+      this.isAutotransport = values.includes('b2f16e21-983d-42bc-9cd6-574668f40ad7');
+      this.isRefrigerator = values.includes('af5a2564-6b65-482f-a114-332ddd9b50e3');
+      this.isCistern = values.includes('1510527c-8710-4361-966a-83242e9c4105');
+      this.isContainer = values.includes('7bedd461-ec79-4753-9e73-57ff017ee279');
+    });
+
   }
   addTransport() {
     this.form.disable();
@@ -111,6 +134,11 @@ export class CreateTransportComponent implements OnInit {
       this.formData.delete('loadingMethodIds')
       this.formData.delete('isAdr')
       this.formData.delete('loadCapacity')
+      this.formData.delete('refrigeratorCount')
+      this.formData.delete('refrigeratorFrom')
+      this.formData.delete('refrigeratorTo')
+      this.formData.delete('cisternVolume')
+      this.formData.delete('isHighCube')
 
       this.formData.append('driverId', this.form.value.driverId)
       this.formData.append('name', this.form.value.name)
@@ -121,6 +149,12 @@ export class CreateTransportComponent implements OnInit {
       this.formData.append('loadingMethodIds', JSON.stringify(this.form.value.loadingMethodIds))
       this.formData.append('isAdr', this.form.value.isAdr)
       this.formData.append('loadCapacity', this.form.value.loadCapacity)
+      this.formData.append('refrigeratorCount', this.form.value.refrigeratorCount)
+      this.formData.append('refrigeratorFrom', this.form.value.refrigeratorFrom)
+      this.formData.append('refrigeratorTo', this.form.value.refrigeratorTo)
+      this.formData.append('cisternVolume', this.form.value.cisternVolume)
+      this.formData.append('isHighCube', this.form.value.isHighCube)
+     
       this.driverService.createTransport(this.formData).subscribe((res:any) => {
         if(res && res.success) {
           this.form.enable();
@@ -145,5 +179,8 @@ export class CreateTransportComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+  onCheckboxChange(event: any) {
+    this.isRefrigeratorMode = event.checked;
   }
 }

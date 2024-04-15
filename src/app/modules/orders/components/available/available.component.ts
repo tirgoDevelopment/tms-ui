@@ -1,5 +1,5 @@
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -11,8 +11,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { jwtDecode } from 'jwt-decode';
-import { AuthService } from 'app/core/auth/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription, catchError, forkJoin, map, of, switchMap } from 'rxjs';
@@ -29,6 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 @Component({
   selector: 'app-available-orders',
   templateUrl: './available.component.html',
+  styleUrls: ['./available.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [PaginationComponent, MatTooltipModule, MatDatepickerModule, MatInputModule, MatSelectModule, ReactiveFormsModule, FormsModule, DatePipe, MatProgressSpinnerModule, MatPaginatorModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatRippleModule, MatMenuModule, MatTabsModule, MatButtonToggleModule, NgApexchartsModule, NgFor, NgIf, MatTableModule, NgClass],
@@ -78,7 +77,6 @@ export class AvailableOrdersComponent implements OnInit {
   constructor(
     private orderService: OrdersService,
     private typesService: TypesService,
-    private authService: AuthService,
     private dialog: MatDialog,
   ) { }
   ngOnInit(): void {

@@ -30,7 +30,7 @@ export const appRoutes: Route[] = [
     },
     children: [
       { path: 'register', loadChildren: () => import('app/modules/register/register.resolver') },
-      { path: 'dashboards', loadChildren: () => import('app/modules/dashboards/dashboard.resolver') },
+      // { path: 'dashboards', loadChildren: () => import('app/modules/dashboards/dashboard.resolver') },
       { path: 'settings', loadChildren: () => import('app/modules/settings/settings.resolver') },
       { path: 'support', loadChildren: () => import('app/modules/support/support.resolver') },
       { path: 'orders', loadChildren: () => import('app/modules/orders/orders.resolver') },

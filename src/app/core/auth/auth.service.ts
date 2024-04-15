@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserService } from 'app/core/user/user.service';
-import { jwtDecode } from 'jwt-decode';
-import { catchError, Observable, of, switchMap } from 'rxjs';
+import { Observable, of, fromEvent, merge } from 'rxjs';
 import { Router } from '@angular/router';
 import { env } from 'environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,6 +16,7 @@ export class AuthService {
     private router: Router
   ) {
   }
+
   set accessToken(token: string) {
     localStorage.setItem('tmc', token);
   }

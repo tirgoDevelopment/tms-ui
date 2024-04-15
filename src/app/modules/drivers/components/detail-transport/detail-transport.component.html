@@ -19,25 +19,25 @@
 
       <div>
         <p class="text-lg mb-1">Тип транспорта</p>
-        <p class="font-bold" *ngFor="let type of item.transportTypes">  {{type.name}} </p>
+        <p class="font-bold" *ngFor="let type of item.transportTypes"> {{type.name}} </p>
       </div>
 
       <div>
         <p class="text-lg mb-1">Вид транспорта </p>
-        <p class="font-bold" *ngFor="let kind of item.transportKinds">  {{kind.name}} </p>
+        <p class="font-bold" *ngFor="let kind of item.transportKinds"> {{kind.name}} </p>
       </div>
       <div>
         <p class="text-lg mb-1">Вид погрузки </p>
-        <p class="font-bold" *ngFor="let method of item.cargoLoadMethods">  {{method.name}} </p>
+        <p class="font-bold" *ngFor="let method of item.cargoLoadMethods"> {{method.name}} </p>
       </div>
       <div>
         <p class="text-lg mb-1">Объем </p>
-        <p class="font-bold">{{item.cubicCapacity  ? item.cubicCapacity+' (m3)' : 'Не указан'}} </p>
+        <p class="font-bold">{{item.cubicCapacity ? item.cubicCapacity+' (m3)' : 'Не указан'}} </p>
       </div>
 
       <div>
         <p class="text-lg mb-1">Грузоподъемность </p>
-        <p class="font-bold">{{item.loadCapacity  ? item.loadCapacity +' (тонна)' : 'Не указан'}} </p>
+        <p class="font-bold">{{item.loadCapacity ? item.loadCapacity +' (тонна)' : 'Не указан'}} </p>
       </div>
 
       <div>
@@ -45,7 +45,46 @@
         <p class="font-bold">{{item.isAdr ? 'Да':'Нет'}} </p>
       </div>
 
-      
+      <div *ngIf="item.isHook">
+        <p class="text-lg mb-1">Крюк</p>
+        <p class="font-bold">
+          {{item.isHook ? 'Да':'Нет'}}</p>
+      </div>
+
+      <div *ngIf="item.refrigeratorCount">
+        <p class="text-lg mb-1">Количество автовоз</p>
+        <p class="font-bold">
+          {{item.refrigeratorCount}}</p>
+      </div>
+
+      <div *ngIf="item.refrigeratorFrom">
+        <p class="text-lg mb-1">Режим от (°С)</p>
+        <p class="font-bold">
+          {{item.refrigeratorFrom}}</p>
+      </div>
+
+      <div *ngIf="item.refrigeratorTo">
+        <p class="text-lg mb-1">Режим до (°С)</p>
+        <p class="font-bold">
+          {{item.refrigeratorTo}}</p>
+      </div>
+      <div *ngIf="item.cisternVolume">
+        <p class="text-lg mb-1">Объем цистерна (л)</p>
+        <p class="font-bold">
+          {{item.cisternVolume}}</p>
+      </div>
+
+      <div *ngIf="item.containerVolume">
+        <p class="text-lg mb-1">Объем контейнера (ф)</p>
+        <p class="font-bold">
+          {{item.containerVolume}}</p>
+      </div>
+      <div *ngIf="item.isHighCube">
+        <p class="text-lg mb-1">Высокий куб</p>
+        <p class="font-bold">
+          {{item.isHighCube ? 'Да':'Нет'}}</p>
+      </div>
+
     </div>
     <div class="grid grid-cols-2 gap-3 mt-5 w-full">
       <div class="w-auto" *ngIf="item.techPassportFrontFilePath">
@@ -77,7 +116,8 @@
       <div class="w-auto">
         <mat-label class="font-bold p-2">Лицензия на грузоперевозку</mat-label>
         <div class="relative flex items-center justify-center w-32 h-32 overflow-hidden p-2">
-          <ng-container *ngIf="(item.goodsTransportationLicenseCardFilePath | fileFetch | async) as imageUrl; else loading">
+          <ng-container
+            *ngIf="(item.goodsTransportationLicenseCardFilePath | fileFetch | async) as imageUrl; else loading">
             <img class="object-fill w-full h-full" [src]="imageUrl" (load)="isLoading = false" />
           </ng-container>
           <ng-template #loading>
@@ -88,6 +128,6 @@
         </div>
       </div>
     </div>
-    
+
   </mat-tab>
 </mat-tab-group>

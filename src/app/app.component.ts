@@ -6,6 +6,7 @@ import { UserService } from './core/user/user.service';
 import { FuseConfig, FuseConfigService } from '@fuse/services/config';
 import { Subject, takeUntil } from 'rxjs';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,8 +24,11 @@ export class AppComponent {
     private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
+
     if(!this.authService.accessToken) {
       this.router.navigate(['/auth/sign-in'])
     }
   }
+
+  
 }
