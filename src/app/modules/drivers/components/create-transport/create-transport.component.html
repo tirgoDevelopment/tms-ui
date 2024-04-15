@@ -33,6 +33,50 @@
       </mat-select>
     </mat-form-field>
 
+    <div class="flex-auto" *ngIf="isRefrigerator">
+      <mat-checkbox [checked]="isRefrigeratorMode" (change)="onCheckboxChange($event)">Режим</mat-checkbox>
+    </div>
+
+    <div class="flex-auto" *ngIf="isRefrigerator">
+      <mat-checkbox formControlName="isHook">Крюк</mat-checkbox>
+    </div>
+
+    <mat-form-field class="flex-auto" *ngIf="isAutotransport">
+      <mat-label>Количество автовоз</mat-label>
+      <input type="number" matInput formControlName="refrigeratorCount">
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto md:w-72 sm:w-full" *ngIf="isRefrigeratorMode">
+      <mat-label>Режим от (°С)</mat-label>
+      <input type="number" matInput formControlName="refrigeratorFrom">
+    </mat-form-field>
+    <mat-form-field class="flex-auto md:w-72 sm:w-full" *ngIf="isRefrigeratorMode">
+      <mat-label>Режим до (°С)</mat-label>
+      <input type="number" matInput formControlName="refrigeratorTo">
+    </mat-form-field>
+
+    <div class="flex-auto" *ngIf="isCistern">
+      <mat-form-field class="flex-auto md:w-72 sm:w-full">
+        <mat-label>Объем цистерна(л)</mat-label>
+        <input type="number" matInput formControlName="cisternVolume">
+      </mat-form-field>
+    </div>
+
+    <div class="flex-auto" *ngIf="isContainer">
+      <mat-form-field class="flex-auto md:w-72 sm:w-full">
+        <mat-label>Объем(ф)</mat-label>
+        <mat-select formControlName="containerVolume">
+          <mat-option value="20">20</mat-option>
+          <mat-option value="40">40</mat-option>
+          <mat-option value="60">60</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex-auto" *ngIf="isContainer">
+      <mat-checkbox formControlName="isHighCube">Высокий куб</mat-checkbox>
+    </div>
+
     <mat-form-field class="flex-auto">
       <mat-label>Вид погрузки</mat-label>
       <mat-select [formControlName]="'loadingMethodIds'" multiple="true">
@@ -43,14 +87,15 @@
     <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
       <mat-label>Грузоподъемность (т.)</mat-label>
       <mat-select [formControlName]="'loadCapacity'">
-        <mat-option *ngFor="let option of loadCapacityOptions" [value]="option">{{ option }} <span matSuffix>тонна</span></mat-option>
+        <mat-option *ngFor="let option of loadCapacityOptions" [value]="option">{{ option }} <span
+            matSuffix>тонна</span></mat-option>
       </mat-select>
     </mat-form-field>
-    
+
 
     <mat-form-field class="flex-auto gt-xs:pr-3 md:w-72 sm:w-full">
       <mat-label>Объем</mat-label>
-      <input matInput [formControlName]="'cubicCapacity'"  />
+      <input matInput [formControlName]="'cubicCapacity'" />
       <span matSuffix>m<sup>3</sup> </span>
     </mat-form-field>
 
@@ -107,14 +152,16 @@
           <div>
             <input formControlName="goodsTransportationLicenseCardFilePath" id="goodsTransportationLicenseCardFilePath"
               class="absolute h-0 w-0 opacity-0 invisible pointer-events-none" type="file" [multiple]="false"
-              [accept]="'image/jpeg, image/png'" (change)="selectFile($event, 'goodsTransportationLicenseCardFilePath')">
+              [accept]="'image/jpeg, image/png'"
+              (change)="selectFile($event, 'goodsTransportationLicenseCardFilePath')">
             <label class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
               for="goodsTransportationLicenseCardFilePath" matRipple>
               <mat-icon class="text-white" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
             </label>
           </div>
         </div>
-        <img class="object-fill w-full h-full" *ngIf="goodsTransportationLicenseCardFilePath" [src]="goodsTransportationLicenseCardFilePath">
+        <img class="object-fill w-full h-full" *ngIf="goodsTransportationLicenseCardFilePath"
+          [src]="goodsTransportationLicenseCardFilePath">
       </div>
     </div>
   </div>

@@ -14,7 +14,7 @@
           </ya-multiroute>
         </ya-map>
       </div>
-      <div class="max-w-md mx-auto mt-3 rounded-lg">
+      <div class="max-w-md mx-auto mt-3 rounded-lg shadow-md">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-lg mb-1">Откуда</p>
@@ -78,6 +78,13 @@
             <p class="text-lg mb-1">Вес груза</p>
             <p class="font-bold">
               {{ data.cargoWeight ? data.cargoWeight + 'кг' : 'Не указана' }}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-lg mb-1">Кубатура</p>
+            <p class="font-bold">
+              {{ data.capacity ? data.capacity : 'Не указана' }} <span *ngIf="data.capacity">m<sup>3</sup> </span>
             </p>
           </div>
 
@@ -166,7 +173,7 @@
           <div *ngIf="data.isHook">
             <p class="text-lg mb-1">Крюк</p>
             <p class="font-bold">
-              {{data.isHook}}</p>
+              {{data.isHook ? 'Да':'Нет'}}</p>
           </div>
 
           <div *ngIf="data.cisternVolume">
@@ -181,24 +188,29 @@
               {{data.containerVolume}}</p>
           </div>
 
+          <div *ngIf="data.isHighCube">
+            <p class="text-lg mb-1">Высокий куб</p>
+            <p class="font-bold">
+              {{data.isHighCube ? 'Да':'Нет'}}</p>
+          </div>
+
           <div>
             <p class="text-lg mb-1">Способ погрузки</p>
             <p class="font-bold">
-              {{data.loadingMethod ? data.loadingMethod.name : 'Не указана'}}</p>
+              {{data.loadingMethod?.name ? data.loadingMethod?.name : 'Не указана'}}</p>
           </div>
           <div>
             <p class="text-lg mb-1">Упаковка</p>
             <p class="font-bold">
-              {{data.cargoPackage ? data.cargoPackage.name : 'Не указана'}}</p>
+              {{data.cargoPackage?.name ? data.cargoPackage?.name : 'Не указана'}}</p>
           </div>
         </div>
         <div class="my-8">
-          <button *ngIf="data.cargoStatus.code == 0" class="fuse-mat-button bg-[#F97C00] text-white" mat-flat-button (click)="assignDriver()">
-            Назначить Водителя
-          </button>
-        </div>
+        <button *ngIf="data.cargoStatus.code == 0" class="fuse-mat-button bg-[#F97C00] text-white" mat-flat-button (click)="assignDriver()">
+          Назначить Водителя
+        </button>
       </div>
-     
+      </div>
     </mat-dialog-content>
   </mat-tab>
   <mat-tab label="Предложения" *ngIf="data.driverOffers.length">
