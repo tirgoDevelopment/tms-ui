@@ -41,6 +41,7 @@ export class Step2Component implements OnInit {
   showTrashIcon: boolean = false;
   data;
   currentUser;
+  loading:boolean = false;
   constructor(
     private authService: AuthService,
     private toastr: ToastrService,
@@ -67,14 +68,14 @@ export class Step2Component implements OnInit {
       email: [null],
       supervisorFirstName: [null, [Validators.required]],
       supervisorLastName: [null, [Validators.required]],
-      phoneNumber: [null, [Validators.required]],
+      phoneNumber: [{value:null, disabled: true}],
       responsiblePersonFistName: [null, [Validators.required]],
       responsiblePersonLastName: [null, [Validators.required]],
       responsbilePersonPhoneNumber: [null, [Validators.required]],
-      factAddress: [null],
+      factAddress: [''],
       legalAddress: [null, [Validators.required]],
-      garageAddress: [null],
-      postalCode: [null],
+      garageAddress: [''],
+      postalCode: [''],
       logo: [null],
       passport: [null],
       registrationCertificate: [null],
@@ -90,7 +91,7 @@ export class Step2Component implements OnInit {
       email: this.merchant.email,
       supervisorFirstName: merchant.supervisorFirstName,
       supervisorLastName: merchant.supervisorLastName,
-      phoneNumber: merchant.phoneNumber,
+      phoneNumber: merchant.phoneNumber.substring(3),
       postalCode: merchant.postalCode,
       garageAddress: merchant.garageAddress,
       responsiblePersonFistName: merchant.responsiblePersonFistName,
@@ -101,35 +102,63 @@ export class Step2Component implements OnInit {
     })
   }
   signUp() {
-    this.signUpForm.disable();
-
-    if (this.signUpForm.value.supervisorFirstName === null) {
-      this.signUpForm.enable();
+    console.log(this.signUpForm.value);
+    
+    this.loading = true;
+    if (this.signUpForm.value.supervisorFirstName === null || this.signUpForm.value.supervisorFirstName === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Имя руководителя');
+      return;
     }
-    else if (this.signUpForm.value.supervisorLastName === null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.supervisorLastName === null || this.signUpForm.value.supervisorLastName === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Фамилия руководителя');
+      return;
     }
-    else if (this.signUpForm.value.phoneNumber ===null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.phoneNumber ===null || this.signUpForm.value.phoneNumber === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Телефон руководителя');
+      return;
     }
-    else if (this.signUpForm.value.responsiblePersonFistName === null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.responsiblePersonFistName === null || this.signUpForm.value.responsiblePersonFistName === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Имя ответственного лица');
+      return;
     }
-    else if (this.signUpForm.value.responsiblePersonLastName === null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.responsiblePersonLastName === null || this.signUpForm.value.responsiblePersonLastName === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Фамилия ответственного лица');
+      return;
     }
-    else if (this.signUpForm.value.responsbilePersonPhoneNumber === null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.responsbilePersonPhoneNumber === null || this.signUpForm.value.responsbilePersonPhoneNumber === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Телефон ответственного лица');
+      return;
     }
-    else if (this.signUpForm.value.address === null) {
-      this.signUpForm.enable();
+    else if (this.signUpForm.value.address === null || this.signUpForm.value.address === '') {
+      this.loading = false;
       this.toastr.error('Требуется указать Юридический адрес');
+      return;
+    }
+    else if (this.signUpForm.value.passport === null || this.signUpForm.value.passport === '') {
+      this.loading = false;
+      this.toastr.error('Требуется указать Паспорт руководителя');
+      return;
+    }
+    else if (this.signUpForm.value.registrationCertificate === null || this.signUpForm.value.registrationCertificate === '') {
+      this.loading = false;
+      this.toastr.error('Требуется указать Регистрация сертификата');
+      return;
+    }
+    else if (this.signUpForm.value.logo === null || this.signUpForm.value.logo === '') {
+      this.loading = false;
+      this.toastr.error('Требуется указать Логотип');
+      return;
+    }
+    else if (this.signUpForm.value.transportationCertificate === null || this.signUpForm.value.transportationCertificate === '') {
+      this.loading = false;
+      this.toastr.error('Требуется указать Лицензия для перевозки груза');
+      return;
     }
     else {
       this.formData.delete('merchantId')
@@ -143,23 +172,23 @@ export class Step2Component implements OnInit {
       this.formData.delete('garageAddress')
       this.formData.delete('postalCode')
 
-      this.formData.append('merchantId', this.currentUser.merchantId)
-      this.formData.append('supervisorFirstName', this.signUpForm.value.supervisorFirstName)
-      this.formData.append('supervisorLastName', this.signUpForm.value.supervisorLastName)
-      this.formData.append('responsiblePersonFistName', this.signUpForm.value.responsiblePersonFistName)
-      this.formData.append('responsiblePersonLastName', this.signUpForm.value.responsiblePersonLastName)
-      this.formData.append('responsbilePersonPhoneNumber', this.signUpForm.value.responsbilePersonPhoneNumber)
-      this.formData.append('factAddress', this.signUpForm.value.factAddress)
-      this.formData.append('legalAddress', this.signUpForm.value.legalAddress)
-      this.formData.append('garageAddress', this.signUpForm.value.garageAddress)
-      this.formData.append('postalCode', this.signUpForm.value.postalCode)
+      this.formData.append('merchantId', this.currentUser.merchantId?? '')
+      this.formData.append('supervisorFirstName', this.signUpForm.value.supervisorFirstName?? '')
+      this.formData.append('supervisorLastName', this.signUpForm.value.supervisorLastName?? '')
+      this.formData.append('responsiblePersonFistName', this.signUpForm.value.responsiblePersonFistName?? '')
+      this.formData.append('responsiblePersonLastName', this.signUpForm.value.responsiblePersonLastName?? '')
+      this.formData.append('responsbilePersonPhoneNumber', this.signUpForm.value.responsbilePersonPhoneNumber?? '')
+      this.formData.append('factAddress', this.signUpForm.value.factAddress?? '')
+      this.formData.append('legalAddress', this.signUpForm.value.legalAddress?? '')
+      this.formData.append('garageAddress', this.signUpForm.value.garageAddress?? '')
+      this.formData.append('postalCode', this.signUpForm.value.postalCode?? '')
       this.authService.merchantUpdate(this.formData).subscribe((res: any) => {
         if (res.success) {
-          this.signUpForm.enable();
+          this.loading = true;
           this.router.navigate(['register/step3']);
         }
       }, error => {
-        this.signUpForm.enable();
+        this.loading = true;
         this.toastr.error(error.message);
       })
     }

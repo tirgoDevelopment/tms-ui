@@ -100,27 +100,27 @@ export class Step3Component implements OnInit {
   }
   signUp() {
     this.signUpForm.disable();
-    if (this.signUpForm.value.bankName === '') {
+    if (this.signUpForm.value.bankName === '' || this.signUpForm.value.bankName === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Наименование банка');
     }
-    else if (this.signUpForm.value.bankAccount === '') {
+    else if (this.signUpForm.value.bankAccount === '' || this.signUpForm.value.bankAccount === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Расчетный счет');
     }
-    else if (this.signUpForm.value.inn === '') {
+    else if (this.signUpForm.value.inn === '' || this.signUpForm.value.inn === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать ИНН');
     }
-    else if (this.signUpForm.value.taxPayerCode === '') {
+    else if (this.signUpForm.value.taxPayerCode === '' || this.signUpForm.value.taxPayerCode === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Код плательщика НДС');
     }
-    else if (this.signUpForm.value.oked === '') {
+    else if (this.signUpForm.value.oked === '' || this.signUpForm.value.oked === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Код плательщика ОКЭД');
     }
-    else if (this.signUpForm.value.mfo === '') {
+    else if (this.signUpForm.value.mfo === '' || this.signUpForm.value.mfo === null) {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Код плательщика МФО');
     }

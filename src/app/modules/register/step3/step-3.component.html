@@ -95,12 +95,6 @@
         </div>
 
         <div class="flex gap-4 mt-6">
-          <a class="fuse-mat-button-large bg-[#F97C00] dark w-full gap-3" [routerLink]="['/register/step2']" mat-flat-button
-            [color]="'primary'">
-          <mat-icon svgIcon="heroicons_outline:arrow-long-left"></mat-icon>
-            Назад
-          </a>
-
           <button class="fuse-mat-button-large dark w-full" mat-flat-button [color]="'primary'"
             [disabled]="signUpForm.disabled" (click)="signUp()">
             <span *ngIf="!signUpForm.disabled">

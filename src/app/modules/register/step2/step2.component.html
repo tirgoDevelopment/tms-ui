@@ -163,11 +163,11 @@
         </div>
 
         <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'"
-          [disabled]="signUpForm.disabled" (click)="signUp()">
-          <span *ngIf="!signUpForm.disabled">
+          [disabled]="loading" (click)="signUp()">
+          <span *ngIf="!loading">
             Продолжить
           </span>
-          <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
+          <mat-progress-spinner *ngIf="loading" [diameter]="24"
             [mode]="'indeterminate'"></mat-progress-spinner>
         </button>
       </form>
